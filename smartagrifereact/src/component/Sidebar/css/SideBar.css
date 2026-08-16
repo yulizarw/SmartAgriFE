@@ -1,0 +1,443 @@
+/* =========================================================
+   SIDEBAR
+========================================================= */
+/* 
+.smartagri-sidebar {
+    position: fixed;
+    left: 18px;
+    top: 18px;
+    bottom: 18px;
+
+    width: 250px;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px 14px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #12372a 0%,
+            #0d2b21 100%
+        );
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 20px 50px rgba(10, 40, 28, 0.22);
+
+    color: #ffffff;
+
+    z-index: 2000;
+
+    overflow: hidden;
+} */
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+/* 
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 6px 10px 20px;
+}
+
+.sidebar-brand-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255,255,255,0.1);
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    border-radius: 13px;
+
+    font-size: 22px;
+}
+
+.sidebar-brand strong {
+    display: block;
+
+    font-size: 20px;
+    font-weight: 700;
+
+    letter-spacing: -0.5px;
+}
+
+.sidebar-brand strong span {
+    color: #8ddc72;
+}
+
+.sidebar-brand small {
+    display: block;
+
+    margin-top: 2px;
+
+    font-size: 10px;
+
+    color: rgba(255,255,255,0.5);
+
+    letter-spacing: 0.8px;
+}
+ */
+
+/* =========================================================
+   FARM
+========================================================= */
+/* 
+.sidebar-farm {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 12px;
+
+    margin-bottom: 14px;
+
+    background: rgba(255,255,255,0.07);
+
+    border: 1px solid rgba(255,255,255,0.06);
+
+    border-radius: 14px;
+}
+
+.sidebar-farm-icon {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(141,220,114,0.12);
+
+    border-radius: 10px;
+
+    font-size: 17px;
+}
+
+.sidebar-farm > div:nth-child(2) {
+    min-width: 0;
+    flex: 1;
+}
+
+.sidebar-farm span:not(.farm-online-dot) {
+    display: block;
+
+    font-size: 8px;
+
+    letter-spacing: 1px;
+
+    color: rgba(255,255,255,0.45);
+}
+
+.sidebar-farm strong {
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 11px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.farm-online-dot {
+    width: 7px;
+    height: 7px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #7ee35d;
+
+    box-shadow: 0 0 0 4px rgba(126,227,93,0.1);
+} */
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+/* .sidebar-navigation {
+    flex: 1;
+
+    overflow-y: auto;
+
+    padding-right: 3px;
+}
+
+.sidebar-navigation::-webkit-scrollbar {
+    width: 3px;
+}
+
+.sidebar-navigation::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.12);
+    border-radius: 10px;
+} */
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+/* 
+.sidebar-section {
+    margin-bottom: 18px;
+}
+
+.sidebar-section-title {
+    padding: 0 10px;
+
+    margin-bottom: 7px;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    color: rgba(255,255,255,0.32);
+
+    letter-spacing: 1.4px;
+}
+ */
+
+/* =========================================================
+   MENU ITEM
+========================================================= */
+
+/* .sidebar-item {
+    position: relative;
+
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 10px 11px;
+
+    margin-bottom: 3px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background: transparent;
+
+    color: rgba(255,255,255,0.65);
+
+    cursor: pointer;
+
+    text-align: left;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.sidebar-item:hover {
+    background: rgba(255,255,255,0.07);
+
+    color: #ffffff;
+
+    transform: translateX(2px);
+}
+
+.sidebar-item.active {
+    background: rgba(141,220,114,0.14);
+
+    color: #ffffff;
+}
+
+.sidebar-item.active::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    top: 8px;
+    bottom: 8px;
+
+    width: 3px;
+
+    background: #8ddc72;
+
+    border-radius: 0 4px 4px 0;
+}
+
+.sidebar-item-icon {
+    width: 21px;
+
+    display: flex;
+    justify-content: center;
+
+    font-size: 15px;
+}
+
+.sidebar-item-label {
+    flex: 1;
+
+    font-size: 12px;
+
+    font-weight: 500;
+}
+
+.sidebar-item-badge {
+    padding: 3px 6px;
+
+    border-radius: 6px;
+
+    background: rgba(141,220,114,0.15);
+
+    color: #9ee582;
+
+    font-size: 8px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.4px;
+} */
+
+
+/* =========================================================
+   BOTTOM
+========================================================= */
+/* 
+.sidebar-bottom {
+    padding-top: 10px;
+
+    border-top: 1px solid rgba(255,255,255,0.07);
+} */
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+/* 
+.sidebar-logout {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 10px 11px;
+
+    margin-top: 3px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background: transparent;
+
+    color: rgba(255,255,255,0.55);
+
+    cursor: pointer;
+
+    text-align: left;
+
+    font-size: 12px;
+
+    transition: all 0.2s ease;
+}
+
+.sidebar-logout:hover {
+    background: rgba(255,80,80,0.1);
+
+    color: #ff9a9a;
+} */
+
+
+/* =========================================================
+   USER
+========================================================= */
+/* 
+.sidebar-user {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 13px 8px 3px;
+}
+
+.sidebar-user-avatar {
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #8ddc72;
+
+    color: #12372a;
+
+    font-weight: 800;
+
+    font-size: 13px;
+}
+
+.sidebar-user strong {
+    display: block;
+
+    font-size: 11px;
+
+    color: #ffffff;
+
+    max-width: 140px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sidebar-user span {
+    display: block;
+
+    margin-top: 2px;
+
+    font-size: 9px;
+
+    color: rgba(255,255,255,0.4);
+} */
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+/* 
+@media (max-width: 900px) {
+
+    .smartagri-sidebar {
+        left: -280px;
+
+        transition: left 0.3s ease;
+    }
+
+    .smartagri-sidebar.open {
+        left: 12px;
+    }
+
+} */

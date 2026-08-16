@@ -1,0 +1,100 @@
+.crop-health-sensor {
+  padding: 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #e1ebe3;
+
+  border-radius: 18px;
+}
+
+.crop-health-sensor-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 18px;
+}
+
+.crop-health-sensor-header span:first-child {
+  color: #849188;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+.crop-health-sensor-header h3 {
+  margin: 4px 0 0;
+
+  color: #31513c;
+
+  font-size: 15px;
+}
+
+.sensor-live-badge {
+  padding: 7px 10px;
+
+  border-radius: 999px;
+
+  background: #effcf3;
+
+  color: #15803d;
+
+  font-size: 9px;
+
+  font-weight: 800;
+}
+
+.crop-health-sensor-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+.crop-health-sensor-item {
+  padding: 12px;
+
+  background: #f8faf8;
+
+  border-radius: 11px;
+}
+
+.crop-health-sensor-item span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #87938b;
+
+  font-size: 9px;
+
+  text-transform: uppercase;
+}
+
+.crop-health-sensor-item strong {
+  color: #31513c;
+
+  font-size: 13px;
+
+  word-break: break-word;
+}
+
+@media (max-width: 800px) {
+  .crop-health-sensor-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .crop-health-sensor-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,253 @@
+/* =========================================================
+   CROP HEALTH HEADER
+   ========================================================= */
+
+.crop-health-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+
+  padding: 28px 32px;
+  margin-bottom: 24px;
+
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+/* =========================================================
+   LEFT SIDE
+   ========================================================= */
+
+.crop-health-header-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  min-width: 0;
+}
+
+.crop-health-header-icon {
+  width: 54px;
+  height: 54px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 14px;
+
+  background: linear-gradient(
+    135deg,
+    #dcfce7,
+    #bbf7d0
+  );
+
+  font-size: 27px;
+
+  box-shadow:
+    0 4px 10px rgba(22, 163, 74, 0.12);
+}
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.crop-health-header-title {
+  min-width: 0;
+}
+
+.crop-health-header-eyebrow {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #16a34a;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.crop-health-header-title h1 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 28px;
+  font-weight: 700;
+
+  line-height: 1.2;
+}
+
+.crop-health-header-title p {
+  margin: 7px 0 0;
+
+  color: #6b7280;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   RIGHT SIDE
+   ========================================================= */
+
+.crop-health-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.crop-health-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 9px 13px;
+
+  border-radius: 999px;
+
+  background: #f0fdf4;
+
+  color: #15803d;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.crop-health-status-dot {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #22c55e;
+
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.12);
+}
+
+/* =========================================================
+   ANALYZE BUTTON
+   ========================================================= */
+
+.crop-health-analyze-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  min-height: 42px;
+
+  padding: 0 18px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #15803d;
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.crop-health-analyze-button:hover {
+  background: #166534;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 6px 14px rgba(22, 101, 52, 0.18);
+}
+
+.crop-health-analyze-button:active {
+  transform: translateY(0);
+}
+
+.crop-health-analyze-button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .crop-health-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .crop-health-header-right {
+    width: 100%;
+
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .crop-health-header {
+    padding: 22px 20px;
+
+    border-radius: 14px;
+  }
+
+  .crop-health-header-left {
+    align-items: flex-start;
+  }
+
+  .crop-health-header-icon {
+    width: 46px;
+    height: 46px;
+
+    font-size: 22px;
+  }
+
+  .crop-health-header-title h1 {
+    font-size: 23px;
+  }
+
+  .crop-health-header-title p {
+    font-size: 13px;
+  }
+
+  .crop-health-header-right {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .crop-health-status,
+  .crop-health-analyze-button {
+    justify-content: center;
+    width: 100%;
+  }
+}

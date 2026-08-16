@@ -1,0 +1,272 @@
+.farm-detail {
+    background: white;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.farm-detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 23px 27px;
+    border-bottom: 1px solid #edf1ee;
+}
+
+.farm-detail-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.farm-detail-icon {
+    width: 45px;
+    height: 45px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    background: #ecfdf3;
+    font-size: 22px;
+}
+
+.farm-detail-title span {
+    color: #15803d;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .14em;
+}
+
+.farm-detail-title h2 {
+    margin: 4px 0 0;
+    font-size: 22px;
+}
+
+.farm-detail-close {
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 9px;
+    background: #f3f6f4;
+    color: #68756d;
+    font-size: 23px;
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.farm-detail-status-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 27px;
+    background: #fafcfb;
+    color: #8a968f;
+    font-size: 11px;
+}
+
+.farm-detail-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+.farm-detail-status span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.farm-detail-status.active {
+    background: #ecfdf3;
+    color: #15803d;
+}
+
+.farm-detail-status.active span {
+    background: #22c55e;
+}
+
+.farm-detail-status.inactive {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+.farm-detail-status.inactive span {
+    background: #94a3b8;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.farm-detail-content {
+    padding: 25px 27px;
+}
+
+.farm-detail-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.detail-info-card,
+.detail-address-card {
+    padding: 16px;
+    border: 1px solid #e7ece9;
+    border-radius: 12px;
+    background: #fbfdfc;
+}
+
+.detail-info-card span,
+.detail-address-card span {
+    display: block;
+    color: #89958e;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .1em;
+}
+
+.detail-info-card strong {
+    display: block;
+    margin-top: 7px;
+    font-size: 16px;
+}
+
+.detail-info-card small {
+    margin-left: 3px;
+    color: #89958e;
+    font-size: 10px;
+}
+
+.detail-address-card {
+    grid-column: 1 / -1;
+}
+
+.detail-address-card strong {
+    display: block;
+    margin-top: 7px;
+    color: #3d4c43;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   MAP
+========================================================= */
+
+.farm-detail-map-wrapper {
+    overflow: hidden;
+    border: 1px solid #e3eae5;
+    border-radius: 15px;
+}
+
+.farm-detail-map-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 16px;
+    border-bottom: 1px solid #e8edea;
+}
+
+.farm-detail-map-header span {
+    display: block;
+    color: #89958e;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .1em;
+}
+
+.farm-detail-map-header strong {
+    display: block;
+    margin-top: 3px;
+    font-size: 13px;
+}
+
+.farm-detail-map-header button {
+    border: 1px solid #bbf7d0;
+    border-radius: 8px;
+    padding: 8px 11px;
+    background: #ecfdf3;
+    color: #15803d;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.farm-detail-map {
+    height: 430px;
+}
+
+.farm-detail-leaflet {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.farm-detail-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 9px;
+    padding: 17px 27px;
+    background: #fafcfb;
+    border-top: 1px solid #edf1ee;
+}
+
+.detail-secondary-button,
+.detail-edit-button {
+    border: 0;
+    border-radius: 9px;
+    padding: 10px 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.detail-secondary-button {
+    background: #edf2ef;
+    color: #5d6b62;
+}
+
+.detail-edit-button {
+    background: #166534;
+    color: #fff;
+}
+
+
+@media (max-width: 700px) {
+
+    .farm-detail-info {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-address-card {
+        grid-column: auto;
+    }
+
+    .farm-detail-content,
+    .farm-detail-header {
+        padding: 20px;
+    }
+
+    .farm-detail-status-row {
+        padding: 10px 20px;
+    }
+
+    .farm-detail-map {
+        height: 350px;
+    }
+
+}

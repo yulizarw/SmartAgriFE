@@ -1,0 +1,236 @@
+.crop-health-form {
+  padding: 24px;
+
+  background: #ffffff;
+
+  border: 1px solid #e1ebe3;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 8px 30px rgba(26, 74, 42, 0.06);
+}
+
+.crop-health-form-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding-bottom: 20px;
+
+  margin-bottom: 22px;
+
+  border-bottom: 1px solid #edf2ee;
+}
+
+.crop-health-form-icon {
+  width: 46px;
+
+  height: 46px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: #ecfdf3;
+
+  font-size: 21px;
+}
+
+.crop-health-form-header span {
+  color: #7b8c80;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.2px;
+}
+
+.crop-health-form-header h2 {
+  margin: 4px 0 0;
+
+  color: #244b32;
+
+  font-size: 18px;
+}
+
+.crop-health-field {
+  margin-bottom: 20px;
+}
+
+.crop-health-field label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #304e3a;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+.crop-health-field select,
+.crop-health-field input {
+  width: 100%;
+
+  height: 46px;
+
+  padding: 0 13px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #d8e4db;
+
+  border-radius: 10px;
+
+  background: #fbfdfb;
+
+  color: #294434;
+
+  outline: none;
+
+  font-size: 13px;
+
+  transition: 0.2s ease;
+}
+
+.crop-health-field select:focus,
+.crop-health-field input:focus {
+  border-color: #22a559;
+
+  box-shadow:
+    0 0 0 3px rgba(34, 165, 89, 0.1);
+}
+
+.crop-health-field small {
+  display: block;
+
+  margin-top: 7px;
+
+  color: #89968d;
+
+  font-size: 11px;
+}
+
+.crop-health-analysis-info {
+  display: flex;
+
+  gap: 10px;
+
+  padding: 13px;
+
+  margin: 22px 0;
+
+  border-radius: 12px;
+
+  background: #f2faf4;
+}
+
+.crop-health-analysis-info > span {
+  font-size: 18px;
+}
+
+.crop-health-analysis-info strong {
+  color: #356047;
+
+  font-size: 12px;
+}
+
+.crop-health-analysis-info p {
+  margin: 3px 0 0;
+
+  color: #728178;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+.crop-health-form-actions {
+  display: flex;
+
+  gap: 10px;
+
+  padding-top: 4px;
+}
+
+.crop-health-reset-button,
+.crop-health-analyze-button {
+  height: 44px;
+
+  border-radius: 10px;
+
+  padding: 0 16px;
+
+  border: none;
+
+  cursor: pointer;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+.crop-health-reset-button {
+  background: #f1f4f2;
+
+  color: #607066;
+}
+
+.crop-health-analyze-button {
+  flex: 1;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  background: #15803d;
+
+  color: white;
+
+  box-shadow:
+    0 6px 15px rgba(21, 128, 61, 0.2);
+}
+
+.crop-health-analyze-button:hover {
+  background: #166534;
+}
+
+.crop-health-analyze-button:disabled,
+.crop-health-reset-button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+.crop-health-spinner {
+  width: 14px;
+
+  height: 14px;
+
+  border: 2px solid rgba(255, 255, 255, 0.4);
+
+  border-top-color: #ffffff;
+
+  border-radius: 50%;
+
+  animation: crop-health-spin 0.8s linear infinite;
+}
+
+@keyframes crop-health-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

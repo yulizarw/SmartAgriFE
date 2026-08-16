@@ -1,0 +1,312 @@
+.farm-page {
+    min-height: 100vh;
+    padding: 32px;
+    background:
+        linear-gradient(
+            135deg,
+            #f8faf9 0%,
+            #f3f7f5 100%
+        );
+    color: #17211b;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.farm-page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 28px;
+}
+
+.farm-page-eyebrow {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    color: #15803d;
+    margin-bottom: 8px;
+}
+
+.farm-page-header h1 {
+    margin: 0;
+    font-size: 32px;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+}
+
+.farm-page-header p {
+    margin: 10px 0 0;
+    color: #718078;
+    font-size: 14px;
+}
+
+.farm-add-button {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    border: 0;
+    border-radius: 12px;
+    padding: 12px 18px;
+    background: #166534;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(22, 101, 52, .18);
+    transition: .2s ease;
+}
+
+.farm-add-button:hover {
+    background: #14532d;
+    transform: translateY(-1px);
+}
+
+.farm-add-button span {
+    font-size: 20px;
+    line-height: 1;
+}
+
+
+/* =========================================================
+   ALERT
+========================================================= */
+
+.farm-alert {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 14px 16px;
+    margin-bottom: 24px;
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    border-radius: 13px;
+    color: #9a3412;
+}
+
+.farm-alert > span {
+    font-size: 20px;
+}
+
+.farm-alert div {
+    flex: 1;
+}
+
+.farm-alert strong {
+    font-size: 13px;
+}
+
+.farm-alert p {
+    margin: 2px 0 0;
+    font-size: 12px;
+}
+
+.farm-alert button {
+    border: 0;
+    background: transparent;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+.farm-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.farm-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px;
+    background: rgba(255,255,255,.82);
+    border: 1px solid #e5ebe7;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(24, 39, 30, .04);
+}
+
+.farm-stat-icon {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: #ecfdf3;
+    font-size: 21px;
+}
+
+.farm-stat-icon.active {
+    color: #15803d;
+    background: #dcfce7;
+    font-size: 15px;
+}
+
+.farm-stat-icon.area {
+    background: #eff6ff;
+}
+
+.farm-stat-icon.map {
+    background: #f5f3ff;
+}
+
+.farm-stat-card span {
+    display: block;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    color: #829088;
+}
+
+.farm-stat-card strong {
+    display: block;
+    margin-top: 5px;
+    font-size: 23px;
+}
+
+.farm-stat-card strong small {
+    margin-left: 4px;
+    font-size: 11px;
+    color: #829088;
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.farm-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(15, 23, 18, .58);
+    backdrop-filter: blur(8px);
+}
+
+.farm-modal {
+    width: min(900px, 100%);
+    max-height: 92vh;
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 22px;
+    box-shadow: 0 30px 80px rgba(0,0,0,.22);
+}
+
+.farm-detail-modal {
+    width: min(1050px, 100%);
+    max-height: 92vh;
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 22px;
+    box-shadow: 0 30px 80px rgba(0,0,0,.22);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .farm-stat-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .farm-page {
+        padding: 18px;
+    }
+
+    .farm-page-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .farm-stat-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .farm-modal-backdrop {
+        padding: 10px;
+        align-items: flex-start;
+    }
+
+    .farm-modal,
+    .farm-detail-modal {
+        max-height: 96vh;
+        border-radius: 16px;
+    }
+
+}
+
+/* =========================================================
+   FARM PAGE LAYOUT
+   Sidebar sudah memiliki CSS sendiri.
+   Jangan ubah CSS Sidebar di sini.
+   ========================================================= */
+
+.farm-layout {
+  min-height: 100vh;
+  width: 100%;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.farm-main {
+  min-height: 100vh;
+  margin-left: 260px; /* sesuaikan dengan lebar sidebar Home */
+  width: calc(100% - 260px);
+}
+
+
+/* =========================================================
+   FARM PAGE
+   ========================================================= */
+
+.farm-page {
+  min-height: 100vh;
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .farm-main {
+    margin-left: 240px;
+    width: calc(100% - 240px);
+  }
+}
+
+
+@media (max-width: 768px) {
+  .farm-main {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .farm-page {
+    padding: 20px;
+  }
+}

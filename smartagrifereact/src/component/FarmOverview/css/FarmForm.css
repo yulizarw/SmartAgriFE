@@ -1,0 +1,417 @@
+.farm-form {
+    background: #fff;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.farm-form-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 26px 28px;
+    border-bottom: 1px solid #edf1ee;
+}
+
+.farm-form-header > div > span {
+    color: #15803d;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .15em;
+}
+
+.farm-form-header h2 {
+    margin: 6px 0 0;
+    font-size: 24px;
+}
+
+.farm-form-header p {
+    margin: 6px 0 0;
+    color: #7b8981;
+    font-size: 13px;
+}
+
+.farm-form-close {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border: 0;
+    border-radius: 10px;
+    background: #f3f6f4;
+    color: #637168;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.farm-form-section {
+    padding: 25px 28px;
+    border-bottom: 1px solid #edf1ee;
+}
+
+.farm-form-section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.farm-form-section-title > span {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    background: #ecfdf3;
+    color: #15803d;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.farm-form-section-title strong {
+    display: block;
+    font-size: 14px;
+}
+
+.farm-form-section-title small {
+    display: block;
+    margin-top: 3px;
+    color: #8a968f;
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.farm-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 17px;
+}
+
+.farm-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.farm-form-group.full {
+    grid-column: 1 / -1;
+}
+
+.farm-form-group label {
+    color: #445149;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.farm-form-group label > span {
+    margin-left: 3px;
+    color: #dc2626;
+}
+
+.farm-form-group input,
+.farm-form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #dfe7e2;
+    border-radius: 10px;
+    padding: 11px 12px;
+    background: #fff;
+    color: #26352c;
+    outline: none;
+    font-family: inherit;
+    font-size: 13px;
+    transition: .15s;
+}
+
+.farm-form-group input:focus,
+.farm-form-group textarea:focus {
+    border-color: #22a052;
+    box-shadow: 0 0 0 3px rgba(34,160,82,.08);
+}
+
+.farm-form-group textarea {
+    resize: vertical;
+}
+
+
+/* =========================================================
+   UNIT
+========================================================= */
+
+.input-with-unit {
+    position: relative;
+}
+
+.input-with-unit input {
+    padding-right: 50px;
+}
+
+.input-with-unit > span {
+    position: absolute;
+    right: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #89958e;
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   TOGGLE
+========================================================= */
+
+.farm-toggle {
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+    gap: 9px;
+    cursor: pointer;
+    height: 42px;
+}
+
+.farm-toggle input {
+    display: none;
+}
+
+.farm-toggle-slider {
+    position: relative;
+    width: 40px;
+    height: 22px;
+    border-radius: 20px;
+    background: #cbd5cf;
+    transition: .2s;
+}
+
+.farm-toggle-slider::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    transition: .2s;
+}
+
+.farm-toggle input:checked + .farm-toggle-slider {
+    background: #16a34a;
+}
+
+.farm-toggle input:checked + .farm-toggle-slider::after {
+    transform: translateX(18px);
+}
+
+
+/* =========================================================
+   LOCATION TABS
+========================================================= */
+
+.location-tabs {
+    display: flex;
+    gap: 5px;
+    padding: 4px;
+    margin-bottom: 14px;
+    border-radius: 11px;
+    background: #f2f5f3;
+    width: fit-content;
+}
+
+.location-tabs button {
+    border: 0;
+    border-radius: 8px;
+    padding: 9px 14px;
+    background: transparent;
+    color: #748078;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.location-tabs button.active {
+    background: #fff;
+    color: #166534;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+.location-tabs button span {
+    margin-right: 5px;
+}
+
+
+/* =========================================================
+   JSON
+========================================================= */
+
+.geojson-editor {
+    border: 1px solid #dfe7e2;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.geojson-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 13px 15px;
+    background: #f8faf9;
+    border-bottom: 1px solid #e7ece9;
+}
+
+.geojson-header strong {
+    display: block;
+    font-size: 12px;
+}
+
+.geojson-header span {
+    display: block;
+    margin-top: 3px;
+    color: #8b978f;
+    font-size: 10px;
+}
+
+.geojson-header button {
+    border: 0;
+    border-radius: 7px;
+    background: #166534;
+    color: #fff;
+    padding: 7px 10px;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.geojson-editor textarea {
+    display: block;
+    width: 100%;
+    min-height: 280px;
+    box-sizing: border-box;
+    padding: 15px;
+    border: 0;
+    outline: 0;
+    resize: vertical;
+    font-family: "Consolas", monospace;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.json-error {
+    padding: 9px 13px;
+    border-top: 1px solid #fecaca;
+    background: #fef2f2;
+    color: #b91c1c;
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   COORDINATES
+========================================================= */
+
+.coordinate-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 18px;
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+.reset-location {
+    margin-top: 14px;
+    border: 0;
+    background: transparent;
+    color: #dc2626;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.farm-form-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 9px;
+    padding: 18px 28px;
+    background: #fafcfb;
+}
+
+.farm-cancel-button,
+.farm-save-button {
+    border: 0;
+    border-radius: 10px;
+    padding: 11px 17px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.farm-cancel-button {
+    background: #eef2ef;
+    color: #55625a;
+}
+
+.farm-save-button {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: #166534;
+    color: white;
+}
+
+.farm-save-button:hover {
+    background: #14532d;
+}
+
+.farm-save-button:disabled {
+    opacity: .7;
+    cursor: not-allowed;
+}
+
+.button-spinner {
+    width: 13px;
+    height: 13px;
+    border: 2px solid rgba(255,255,255,.4);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: farmButtonSpin .7s linear infinite;
+}
+
+@keyframes farmButtonSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .farm-form-grid,
+    .coordinate-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .farm-form-group.full {
+        grid-column: auto;
+    }
+
+    .farm-form-section,
+    .farm-form-header {
+        padding: 20px;
+    }
+
+}
