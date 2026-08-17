@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from "react";
 
 import "./css/Farm.css";
+import "./css/loading.css";
+// redux
+import {
+  fetchFarms,
+  addFarm,
+  updateFarm,
+  deleteFarm,
+} from "../store/action/farmAction";
 
 import FarmList from "../component/FarmOverview/FarmList";
 import FarmForm from "../component/FarmOverview/FarmForm";
 import FarmDetail from "../component/FarmOverview/FarmDetail";
 import Sidebar from "../component/Sidebar/SideBar";
+import { useSelector, useDispatch } from "react-redux";
+
+// loading
+import Lottie from "react-lottie";
+import * as loaderData from "../asset/lottieLego.json";
 
 const emptyFarm = {
   id: null,
@@ -22,10 +35,11 @@ const emptyFarm = {
 export const Farm = ({
   getFarms,
   createFarm,
-  updateFarm,
-  deleteFarm,
+  // updateFarm,
+  // deleteFarm,
   logOutFunction,
 }) => {
+  const dispatch = useDispatch();
   const [farms, setFarms] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -41,6 +55,17 @@ export const Farm = ({
   const [selectedFarm, setSelectedFarm] = useState(null);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // store
+  const userLogin = useSelector((state) => state.userReducers.userLogin);
+  const farmList = useSelector((state) => state.farmReducers.farms);
+
+  // useEffect(() => {
+  //     if (userLogin?.access_token) {
+  //       dispatch(cropLists(userLogin.access_token));
+  //     }
+  //   }, [userLogin?.access_token, dispatch]);
+
   /*
     |--------------------------------------------------------------------------
     | FORM
@@ -61,12 +86,12 @@ export const Farm = ({
 
       setError("");
 
-      if (!getFarms) {
+      if (!farms) {
         setFarms([]);
         return;
       }
 
-      const result = await getFarms();
+      const result = farmList;
 
       /*
        * Antisipasi beberapa bentuk response.
@@ -84,9 +109,34 @@ export const Farm = ({
     }
   };
 
+  // useEffect(() => {
+  //   loadFarms();
+  // }, []);
+  // =========================================================
+  // LOADING
+  // =========================================================
+
   useEffect(() => {
-    loadFarms();
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
+  // =========================================================
+  // LOTTIE
+  // =========================================================
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: loaderData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
 
   /*
     |--------------------------------------------------------------------------
@@ -152,7 +202,6 @@ export const Farm = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       setSaving(true);
 
@@ -180,25 +229,33 @@ export const Farm = ({
        */
 
       if (editingFarm) {
-        if (!updateFarm) {
-          throw new Error("updateFarm belum dihubungkan.");
-        }
+        const result = await dispatch(
+          updateFarm(editingFarm.id, payload, userLogin.access_token),
+        );
 
-        await updateFarm(editingFarm.id, payload);
+        if (!result?.success) {
+          throw new Error(
+            result?.error?.response?.data?.message || "Gagal update farm",
+          );
+        }
+        await dispatch(fetchFarms(userLogin.access_token));
       }
 
       /*
        * ADD
        */
       else {
-        if (!createFarm) {
-          throw new Error("createFarm belum dihubungkan.");
-        }
+        // if (!createFarm) {
+        //   throw new Error("createFarm belum dihubungkan.");
+        // }
 
-        await createFarm(payload);
+        // await createFarm(payload);
+        await dispatch(
+          addFarm({ farmData: payload, access_token: userLogin.access_token }),
+        );
       }
 
-      await loadFarms();
+      await dispatch(fetchFarms(userLogin.access_token));
 
       handleCloseForm();
     } catch (err) {
@@ -230,13 +287,13 @@ export const Farm = ({
         throw new Error("deleteFarm belum dihubungkan.");
       }
 
-      await deleteFarm(farm.id);
+      await dispatch(deleteFarm(farm.id, userLogin.access_token));
 
       if (selectedFarm && selectedFarm.id === farm.id) {
         setSelectedFarm(null);
       }
 
-      await loadFarms();
+      await dispatch(fetchFarms(userLogin.access_token));
     } catch (err) {
       console.error(err);
 
@@ -264,166 +321,172 @@ export const Farm = ({
     setSelectedFarm(null);
   };
 
-//   return (
-//     <>
-//       <Sidebar
-//         sidebarOpen={sidebarOpen}
-//         setSidebarOpen={setSidebarOpen}
-//         logOutFunction={logOutFunction}
-//       />
-//       <div className="farm-page">
-//         {/* =====================================================
-//                 PAGE HEADER
-//             ===================================================== */}
+  //   return (
+  //     <>
+  //       <Sidebar
+  //         sidebarOpen={sidebarOpen}
+  //         setSidebarOpen={setSidebarOpen}
+  //         logOutFunction={logOutFunction}
+  //       />
+  //       <div className="farm-page">
+  //         {/* =====================================================
+  //                 PAGE HEADER
+  //             ===================================================== */}
 
-//         <div className="farm-page-header">
-//           <div>
-//             <div className="farm-page-eyebrow">FARM MANAGEMENT</div>
+  //         <div className="farm-page-header">
+  //           <div>
+  //             <div className="farm-page-eyebrow">FARM MANAGEMENT</div>
 
-//             <h1>Farm Overview</h1>
+  //             <h1>Farm Overview</h1>
 
-//             <p>
-//               Kelola lokasi, lahan, dan informasi farm yang terhubung dengan
-//               SmartAgri.
-//             </p>
-//           </div>
+  //             <p>
+  //               Kelola lokasi, lahan, dan informasi farm yang terhubung dengan
+  //               SmartAgri.
+  //             </p>
+  //           </div>
 
-//           <button type="button" className="farm-add-button" onClick={handleAdd}>
-//             <span>+</span>
-//             Add New Farm
-//           </button>
-//         </div>
+  //           <button type="button" className="farm-add-button" onClick={handleAdd}>
+  //             <span>+</span>
+  //             Add New Farm
+  //           </button>
+  //         </div>
 
-//         {/* =====================================================
-//                 ERROR
-//             ===================================================== */}
+  //         {/* =====================================================
+  //                 ERROR
+  //             ===================================================== */}
 
-//         {error && (
-//           <div className="farm-alert">
-//             <span>⚠</span>
+  //         {error && (
+  //           <div className="farm-alert">
+  //             <span>⚠</span>
 
-//             <div>
-//               <strong>Terjadi kesalahan</strong>
+  //             <div>
+  //               <strong>Terjadi kesalahan</strong>
 
-//               <p>{error}</p>
-//             </div>
+  //               <p>{error}</p>
+  //             </div>
 
-//             <button type="button" onClick={() => setError("")}>
-//               ×
-//             </button>
-//           </div>
-//         )}
+  //             <button type="button" onClick={() => setError("")}>
+  //               ×
+  //             </button>
+  //           </div>
+  //         )}
 
-//         {/* =====================================================
-//                 STATISTICS
-//             ===================================================== */}
+  //         {/* =====================================================
+  //                 STATISTICS
+  //             ===================================================== */}
 
-//         <div className="farm-stat-grid">
-//           <div className="farm-stat-card">
-//             <div className="farm-stat-icon">🌱</div>
+  //         <div className="farm-stat-grid">
+  //           <div className="farm-stat-card">
+  //             <div className="farm-stat-icon">🌱</div>
 
-//             <div>
-//               <span>TOTAL FARM</span>
+  //             <div>
+  //               <span>TOTAL FARM</span>
 
-//               <strong>{farms.length}</strong>
-//             </div>
-//           </div>
+  //               <strong>{farms.length}</strong>
+  //             </div>
+  //           </div>
 
-//           <div className="farm-stat-card">
-//             <div className="farm-stat-icon active">●</div>
+  //           <div className="farm-stat-card">
+  //             <div className="farm-stat-icon active">●</div>
 
-//             <div>
-//               <span>ACTIVE</span>
+  //             <div>
+  //               <span>ACTIVE</span>
 
-//               <strong>
-//                 {
-//                   farms.filter(
-//                     (farm) => farm.status === true || farm.status === "ACTIVE",
-//                   ).length
-//                 }
-//               </strong>
-//             </div>
-//           </div>
+  //               <strong>
+  //                 {
+  //                   farms.filter(
+  //                     (farm) => farm.status === true || farm.status === "ACTIVE",
+  //                   ).length
+  //                 }
+  //               </strong>
+  //             </div>
+  //           </div>
 
-//           <div className="farm-stat-card">
-//             <div className="farm-stat-icon area">📐</div>
+  //           <div className="farm-stat-card">
+  //             <div className="farm-stat-icon area">📐</div>
 
-//             <div>
-//               <span>TOTAL AREA</span>
+  //             <div>
+  //               <span>TOTAL AREA</span>
 
-//               <strong>
-//                 {farms
-//                   .reduce((total, farm) => total + Number(farm.area || 0), 0)
-//                   .toLocaleString()}
+  //               <strong>
+  //                 {farms
+  //                   .reduce((total, farm) => total + Number(farm.area || 0), 0)
+  //                   .toLocaleString()}
 
-//                 <small>m²</small>
-//               </strong>
-//             </div>
-//           </div>
+  //                 <small>m²</small>
+  //               </strong>
+  //             </div>
+  //           </div>
 
-//           <div className="farm-stat-card">
-//             <div className="farm-stat-icon map">🗺️</div>
+  //           <div className="farm-stat-card">
+  //             <div className="farm-stat-icon map">🗺️</div>
 
-//             <div>
-//               <span>MAPPED</span>
+  //             <div>
+  //               <span>MAPPED</span>
 
-//               <strong>{farms.filter((farm) => farm.polygon).length}</strong>
-//             </div>
-//           </div>
-//         </div>
+  //               <strong>{farms.filter((farm) => farm.polygon).length}</strong>
+  //             </div>
+  //           </div>
+  //         </div>
 
-//         {/* =====================================================
-//                 FARM LIST
-//             ===================================================== */}
+  //         {/* =====================================================
+  //                 FARM LIST
+  //             ===================================================== */}
 
-//         <FarmList
-//           farms={farms}
-//           loading={loading}
-//           onView={handleView}
-//           onEdit={handleEdit}
-//           onDelete={handleDelete}
-//           onAdd={handleAdd}
-//         />
+  //         <FarmList
+  //           farms={farms}
+  //           loading={loading}
+  //           onView={handleView}
+  //           onEdit={handleEdit}
+  //           onDelete={handleDelete}
+  //           onAdd={handleAdd}
+  //         />
 
-//         {/* =====================================================
-//                 FORM MODAL
-//             ===================================================== */}
+  //         {/* =====================================================
+  //                 FORM MODAL
+  //             ===================================================== */}
 
-//         {showForm && (
-//           <div className="farm-modal-backdrop">
-//             <div className="farm-modal">
-//               <FarmForm
-//                 inputForm={inputForm}
-//                 setInputForm={setInputForm}
-//                 submitForm={handleSubmit}
-//                 editingFarm={editingFarm}
-//                 saving={saving}
-//                 onClose={handleCloseForm}
-//               />
-//             </div>
-//           </div>
-//         )}
+  //         {showForm && (
+  //           <div className="farm-modal-backdrop">
+  //             <div className="farm-modal">
+  //               <FarmForm
+  //                 inputForm={inputForm}
+  //                 setInputForm={setInputForm}
+  //                 submitForm={handleSubmit}
+  //                 editingFarm={editingFarm}
+  //                 saving={saving}
+  //                 onClose={handleCloseForm}
+  //               />
+  //             </div>
+  //           </div>
+  //         )}
 
-//         {/* =====================================================
-//                 DETAIL MODAL
-//             ===================================================== */}
+  //         {/* =====================================================
+  //                 DETAIL MODAL
+  //             ===================================================== */}
 
-//         {selectedFarm && (
-//           <div className="farm-modal-backdrop">
-//             <div className="farm-detail-modal">
-//               <FarmDetail
-//                 farm={selectedFarm}
-//                 onClose={handleCloseDetail}
-//                 onEdit={handleEdit}
-//               />
-//             </div>
-//           </div>
-//         )}
-//       </div>
-//     </>
-//   );
+  //         {selectedFarm && (
+  //           <div className="farm-modal-backdrop">
+  //             <div className="farm-detail-modal">
+  //               <FarmDetail
+  //                 farm={selectedFarm}
+  //                 onClose={handleCloseDetail}
+  //                 onEdit={handleEdit}
+  //               />
+  //             </div>
+  //           </div>
+  //         )}
+  //       </div>
+  //     </>
+  //   );
+  // console.log(farmList,'farms')
   return (
     <div className="farm-layout">
+      {loading && (
+        <div className="loading-overlay">
+          <Lottie options={defaultOptions} height={180} width={180} />
+        </div>
+      )}
       <Sidebar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
@@ -487,7 +550,7 @@ export const Farm = ({
 
               <div>
                 <span>TOTAL FARM</span>
-                <strong>{farms.length}</strong>
+                <strong>{farmList.length}</strong>
               </div>
             </div>
 
@@ -499,7 +562,7 @@ export const Farm = ({
 
                 <strong>
                   {
-                    farms.filter(
+                    farmList.filter(
                       (farm) =>
                         farm.status === true || farm.status === "ACTIVE",
                     ).length
@@ -515,7 +578,7 @@ export const Farm = ({
                 <span>TOTAL AREA</span>
 
                 <strong>
-                  {farms
+                  {farmList
                     .reduce((total, farm) => total + Number(farm.area || 0), 0)
                     .toLocaleString()}
 
@@ -530,7 +593,9 @@ export const Farm = ({
               <div>
                 <span>MAPPED</span>
 
-                <strong>{farms.filter((farm) => farm.polygon).length}</strong>
+                <strong>
+                  {farmList.filter((farm) => farm.polygon).length}
+                </strong>
               </div>
             </div>
           </div>
@@ -540,7 +605,8 @@ export const Farm = ({
         ===================================================== */}
 
           <FarmList
-            farms={farms}
+            // farms={farms}
+            farmList={farmList}
             loading={loading}
             onView={handleView}
             onEdit={handleEdit}

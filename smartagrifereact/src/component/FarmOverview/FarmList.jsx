@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 
 import "./css/FarmList.css";
 
-const FarmList = ({ farms = [], loading, onView, onEdit, onDelete, onAdd }) => {
+const FarmList = ({loading, onView, onEdit, onDelete, onAdd, farmList }) => {
   const [search, setSearch] = useState("");
 
   const [statusFilter, setStatusFilter] = useState("ALL");
@@ -14,7 +14,7 @@ const FarmList = ({ farms = [], loading, onView, onEdit, onDelete, onAdd }) => {
     */
 
   const filteredFarms = useMemo(() => {
-    return farms.filter((farm) => {
+    return farmList.filter((farm) => {
       const searchMatch =
         !search ||
         farm.name?.toLowerCase().includes(search.toLowerCase()) ||
@@ -29,7 +29,7 @@ const FarmList = ({ farms = [], loading, onView, onEdit, onDelete, onAdd }) => {
 
       return searchMatch && statusMatch;
     });
-  }, [farms, search, statusFilter]);
+  }, [farmList, search, statusFilter]);
 
   /*
     |--------------------------------------------------------------------------

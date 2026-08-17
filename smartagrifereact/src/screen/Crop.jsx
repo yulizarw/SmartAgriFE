@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
 import Sidebar from "../component/Sidebar/SideBar";
 
 import CropHeader from "../component/Crop/CropHeader";
@@ -8,6 +8,19 @@ import CropForm from "../component/Crop/CropForm";
 import CropDetail from "../component/Crop/CropDetail";
 
 import "./css/Crop.css";
+import "./css/loading.css";
+
+// loading
+import Lottie from "react-lottie";
+import * as loaderData from "../asset/lottieLego.json";
+
+// redux
+import {
+  cropLists,
+  createCrop,
+  updateCrop,
+  deleteCrop,
+} from "../store/action/cropAction";
 
 const emptyCrop = {
   cropName: "",
@@ -17,20 +30,22 @@ const emptyCrop = {
   targetMoisture: "",
   targetNDVI: "",
   targetTemperature: "",
-  status: "GROWING",
+  status: "Growing",
   farmId: "",
 };
 
 export const Crop = ({
   getCrops,
   getFarms,
-  createCrop,
-  updateCrop,
-  deleteCrop,
+  // createCrop,
+  // updateCrop,
+  // deleteCrop,
   logOutFunction,
 }) => {
   const [crops, setCrops] = useState([]);
   const [farms, setFarms] = useState([]);
+
+  const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -47,35 +62,67 @@ export const Crop = ({
 
   const [editingCrop, setEditingCrop] = useState(null);
 
+  // store
+  const cropHome = useSelector((state) => state.cropReducers.cropHome);
+  const userLogin = useSelector((state) => state.userReducers.userLogin);
+  const listCrop = useSelector((state) => state.cropReducers.listCrop);
+  const farmList = useSelector((state) => state.farmReducers.farms);
+
+  // loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (userLogin?.access_token) {
+      dispatch(cropLists(userLogin.access_token));
+    }
+  }, [userLogin?.access_token, dispatch]);
+
+  // loading
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: loaderData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
   /*
   |--------------------------------------------------------------------------
   | LOAD CROPS
   |--------------------------------------------------------------------------
   */
 
-  const loadCrops = async () => {
-    try {
-      setLoading(true);
-      setError("");
+  // const loadCrops = async () => {
+  //   try {
+  //     setLoading(true);
+  //     setError("");
 
-      if (!getCrops) {
-        setCrops([]);
-        return;
-      }
+  //     if (!listCrop) {
+  //       setCrops([]);
+  //       return;
+  //     }
 
-      const result = await getCrops();
+  //     // const result = await getCrops();
 
-      const data = result?.data || result?.crops || result || [];
+  //     const data = listCrop?.data || listCrop?.crops || [];
+  //     setCrops(Array.isArray(data) ? data : []);
+  //   } catch (err) {
+  //     console.error(err);
 
-      setCrops(Array.isArray(data) ? data : []);
-    } catch (err) {
-      console.error(err);
-
-      setError(err?.message || "Gagal mengambil data crop.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     setError(err?.message || "Gagal mengambil data crop.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   /*
   |--------------------------------------------------------------------------
@@ -90,9 +137,9 @@ export const Crop = ({
         return;
       }
 
-      const result = await getFarms();
+      // const result = await getFarms();
 
-      const data = result?.data || result?.farms || result || [];
+      const data = listCrop?.data || listCrop?.farms || [];
 
       setFarms(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -100,10 +147,10 @@ export const Crop = ({
     }
   };
 
-  useEffect(() => {
-    loadCrops();
-    loadFarms();
-  }, []);
+  // useEffect(() => {
+  //   loadCrops();
+  //   loadFarms();
+  // }, []);
 
   /*
   |--------------------------------------------------------------------------
@@ -145,7 +192,7 @@ export const Crop = ({
 
       targetTemperature: crop.targetTemperature ?? "",
 
-      status: crop.status || "GROWING",
+      status: crop.status || "Growing",
 
       farmId: crop.farmId ?? "",
     });
@@ -192,69 +239,83 @@ export const Crop = ({
 
       const payload = {
         cropName: cropForm.cropName,
-
         variety: cropForm.variety,
-
         plantingDate: cropForm.plantingDate,
-
         harvestDate: cropForm.harvestDate || null,
-
         targetMoisture: Number(cropForm.targetMoisture),
-
         targetNDVI: Number(cropForm.targetNDVI),
-
         targetTemperature: Number(cropForm.targetTemperature),
-
         status: cropForm.status,
-
         farmId: Number(cropForm.farmId),
       };
 
-      /*
-      |--------------------------------------------------------------------------
-      | CREATE
-      |--------------------------------------------------------------------------
-      */
+      // =====================================================
+      // CREATE
+      // =====================================================
 
       if (!editingCrop) {
-        if (!createCrop) {
-          throw new Error("createCrop belum dihubungkan.");
-        }
-
-        await createCrop(payload);
+        await dispatch(createCrop(payload, userLogin.access_token));
       }
 
-      /*
-      |--------------------------------------------------------------------------
-      | UPDATE
-      |--------------------------------------------------------------------------
-      */
+      // =====================================================
+      // UPDATE
+      // =====================================================
       else {
-        if (!updateCrop) {
-          throw new Error("updateCrop belum dihubungkan.");
-        }
-
-        await updateCrop(editingCrop.id, payload);
+        await dispatch(
+          updateCrop(editingCrop.id, payload, userLogin.access_token),
+        );
       }
 
-      await loadCrops();
+      // =====================================================
+      // LOAD ULANG DATA TERBARU
+      // =====================================================
+
+      await dispatch(cropLists(userLogin.access_token));
+
+      // =====================================================
+      // TUTUP FORM
+      // =====================================================
 
       handleCloseCropForm();
     } catch (err) {
-      console.error(err);
+      console.error("SUBMIT CROP ERROR:", err);
 
-      setError(err?.message || "Gagal menyimpan crop.");
+      setError(
+        err?.response?.data?.message || err?.message || "Gagal menyimpan crop.",
+      );
     } finally {
       setSaving(false);
     }
   };
-
   /*
   |--------------------------------------------------------------------------
   | DELETE
   |--------------------------------------------------------------------------
   */
 
+  // const handleDeleteCrop = async (crop) => {
+  //   const confirmed = window.confirm(`Hapus tanaman "${crop.cropName}"?`);
+
+  //   if (!confirmed) {
+  //     return;
+  //   }
+
+  //   try {
+  //     setError("");
+
+  //     if (!deleteCrop) {
+  //       throw new Error("deleteCrop belum dihubungkan.");
+  //     }else{
+  //       await dispatch(deleteCrop(crop.id,userLogin.access_token))
+  //     }
+  //     setSelectedCrop(null);
+
+  //     await dispatch(cropLists(userLogin.access_token));
+  //   } catch (err) {
+  //     console.error(err);
+  //     setError(err?.message || "Gagal menghapus crop.");
+  //   }
+  // };
   const handleDeleteCrop = async (crop) => {
     const confirmed = window.confirm(`Hapus tanaman "${crop.cropName}"?`);
 
@@ -264,23 +325,26 @@ export const Crop = ({
 
     try {
       setError("");
+      setSaving(true);
 
-      if (!deleteCrop) {
-        throw new Error("deleteCrop belum dihubungkan.");
-      }
+      // 1. Tunggu DELETE selesai
+      await dispatch(deleteCrop(crop.id, userLogin.access_token));
 
-      await deleteCrop(crop.id);
+      // 2. Baru ambil data terbaru
+      await dispatch(cropLists(userLogin.access_token));
 
+      // 3. Tutup detail
       setSelectedCrop(null);
-
-      await loadCrops();
     } catch (err) {
-      console.error(err);
+      console.error("DELETE CROP ERROR:", err);
 
-      setError(err?.message || "Gagal menghapus crop.");
+      setError(
+        err?.response?.data?.message || err?.message || "Gagal menghapus crop.",
+      );
+    } finally {
+      setSaving(false);
     }
   };
-
   /*
   |--------------------------------------------------------------------------
   | FARM NAME
@@ -299,18 +363,24 @@ export const Crop = ({
   |--------------------------------------------------------------------------
   */
 
-  const totalCrops = crops.length;
+  const totalCrops = listCrop.length;
 
-  const activeCrops = crops.filter(
-    (crop) => crop.status === "GROWING" || crop.status === "ACTIVE",
+  const activeCrops = listCrop.filter(
+    (crop) => crop.status === "Growing" || crop.status === "Active",
   ).length;
 
-  const harvestedCrops = crops.filter(
-    (crop) => crop.status === "HARVESTED",
+  const harvestedCrops = listCrop.filter(
+    (crop) => crop.status === "Harvested",
   ).length;
 
   return (
     <>
+      {loading && (
+        <div className="loading-overlay">
+          <Lottie options={defaultOptions} height={180} width={180} />
+        </div>
+      )}
+
       <Sidebar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
@@ -343,6 +413,7 @@ export const Crop = ({
 
         <CropList
           crops={crops}
+          listCrop={listCrop}
           farms={farms}
           loading={loading}
           onAdd={handleAddCrop}
@@ -358,7 +429,7 @@ export const Crop = ({
               <CropForm
                 form={cropForm}
                 setForm={setCropForm}
-                farms={farms}
+                farmList={farmList}
                 saving={saving}
                 editingCrop={editingCrop}
                 onSubmit={handleSubmitCrop}
@@ -375,6 +446,7 @@ export const Crop = ({
             <div className="crop-detail-modal">
               <CropDetail
                 crop={selectedCrop}
+                farmList={farmList}
                 farmName={getFarmName(selectedCrop.farmId)}
                 onEdit={() => {
                   setSelectedCrop(null);

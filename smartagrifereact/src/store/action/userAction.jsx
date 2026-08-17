@@ -22,14 +22,15 @@ import axios from "../../config/axios";
 // }
 
 
-export const fetchLogin = (userInfo) => {
+export const fetchLogin = (formData) => {
   return async (dispatch) => {
     try {
+      
       const { data } = await axios.post("/user/login", {
-        email: userInfo.email,
-        password: userInfo.password,
+        email: formData.email,
+        password: formData.password,
       });
-
+     
       // Simpan token
       localStorage.setItem("access_token", data.access_token);
 
@@ -40,7 +41,7 @@ export const fetchLogin = (userInfo) => {
      
       dispatch({
         type: "USER_LOGIN",
-        payload: data.loginUser,
+        payload: data,
       });
 
       return {

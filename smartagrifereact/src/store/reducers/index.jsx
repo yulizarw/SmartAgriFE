@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import { userReducers } from './userReducers';
-import {farmReducers} from './farmReducers'
+import {farmReducers} from './farmReducers';
+import { cropReducers } from "./cropReducers";
 // import { kaprodiReducers } from './kaprodiReducers'
 // import { adminReducers } from "./adminReducers";
 // import { dikjarReducers } from "./dikjarReducers";
@@ -10,7 +11,8 @@ import {farmReducers} from './farmReducers'
 
 export default combineReducers({
     userReducers,
-    farmReducers
+    farmReducers,
+    cropReducers
     // adminReducers,
     // dikjarReducers,
     // dospemReducers,

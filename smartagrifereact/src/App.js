@@ -134,7 +134,7 @@ function App() {
             path="/crop"
             element={
               <ProtectedRoute authLogin={authLogin}>
-                <Crop logOutFunction={logOutFunction} />
+                <Crop logOutFunction={logOutFunction}  />
               </ProtectedRoute>
             }
           />

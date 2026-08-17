@@ -3,7 +3,7 @@ import React from "react";
 const CropForm = ({
   form,
   setForm,
-  farms,
+  farmList,
   saving,
   editingCrop,
   onSubmit,
@@ -46,7 +46,7 @@ const CropForm = ({
           >
             <option value="">-- Pilih Farm --</option>
 
-            {farms.map((farm) => (
+            {farmList.map((farm) => (
               <option key={farm.id} value={farm.id}>
                 {farm.name}
               </option>
@@ -169,11 +169,11 @@ const CropForm = ({
           <label>Status</label>
 
           <select name="status" value={form.status} onChange={handleChange}>
-            <option value="GROWING">GROWING</option>
+            <option value="Growing">Growing</option>
 
-            <option value="HARVESTED">HARVESTED</option>
+            <option value="Harvested">Harvested</option>
 
-            <option value="FAILED">FAILED</option>
+            <option value="Failed">Failed</option>
           </select>
         </div>
       </div>

@@ -338,6 +338,29 @@
 
   background: #fff5d9;
 }
+/* 0 - 25 */
+.status-pill.bad {
+  color: #b42318;
+  background: #fdecec;
+}
+
+/* 26 - 50 */
+.status-pill.poor {
+  color: #9a3412;
+  background: #fff0e6;
+}
+
+/* 51 - 75 */
+.status-pill.moderate {
+  color: #987221;
+  background: #fff5d9;
+}
+
+/* 76 - 100 */
+.status-pill.excellent {
+  color: #15803d;
+  background: #dcfce7;
+}
 
 .health-score-wrapper {
   display: flex;

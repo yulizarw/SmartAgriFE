@@ -1,6 +1,6 @@
 import React from "react";
 
-const CropDetail = ({ crop, farmName, onEdit, onDelete, onClose }) => {
+const CropDetail = ({ crop, farmName, onEdit, onDelete, onClose, farmList }) => {
   return (
     <div className="crop-detail">
       <div className="crop-detail-header">
@@ -21,7 +21,7 @@ const CropDetail = ({ crop, farmName, onEdit, onDelete, onClose }) => {
         <div className="crop-detail-farm">
           <span>FARM</span>
 
-          <strong>🌱 {farmName}</strong>
+          <strong>🌱 {crop.Farm.name}</strong>
         </div>
 
         <div className="crop-detail-grid">

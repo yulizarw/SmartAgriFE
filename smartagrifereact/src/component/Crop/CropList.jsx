@@ -1,6 +1,6 @@
 import React from "react";
 
-const CropList = ({ crops, farms, loading, onAdd, onView, onEdit }) => {
+const CropList = ({ crops, farms, loading, onAdd, onView, onEdit, listCrop}) => {
   const getFarmName = (farmId) => {
     const farm = farms.find((item) => Number(item.id) === Number(farmId));
 
@@ -35,7 +35,7 @@ const CropList = ({ crops, farms, loading, onAdd, onView, onEdit }) => {
         <strong>{crops.length} crops</strong>
       </div>
 
-      {crops.length === 0 ? (
+      {listCrop.length === 0 ? (
         <div className="crop-empty">
           <div className="crop-empty-icon">🌱</div>
 
@@ -63,13 +63,14 @@ const CropList = ({ crops, farms, loading, onAdd, onView, onEdit }) => {
             </thead>
 
             <tbody>
-              {crops.map((crop) => (
+              {listCrop.map((crop) => (
                 <tr key={crop.id}>
                   <td>
                     <strong>{crop.cropName}</strong>
                   </td>
 
-                  <td>{getFarmName(crop.farmId)}</td>
+                  {/* <td>{getFarmName(crop.farmId)}</td> */}
+                  <td>{crop.Farm.name}</td>
 
                   <td>{crop.variety || "-"}</td>
 

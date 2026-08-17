@@ -5,56 +5,148 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { logOut } from "../store/action/userAction";
-// asset
-import logoApp from "../asset/smartAgri1.png";
-
 
 // component
 import Sidebar from "../component/Sidebar/SideBar";
 
+// loading
 import Lottie from "react-lottie";
 import * as loaderData from "../asset/lottieLego.json";
+
+// store
+import { fetchFarms } from "../store/action/farmAction";
+
+import {
+  cropHealthAnalyzeHome,
+  cropHealthHome,
+} from "../store/action/cropAction";
 
 export const Home = ({ logOutFunction }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [loading, setLoading] = useState(true);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const healthScore = 64;
-
-  /*
-    |--------------------------------------------------------------------------
-    | REDUX USER
-    |--------------------------------------------------------------------------
-    */
+  // =========================================================
+  // REDUX
+  // =========================================================
 
   const userLogin = useSelector((state) => state.userReducers.userLogin);
 
-  const fullName = userLogin?.fullName || "User";
+  const farms = useSelector((state) => state.farmReducers.farms);
+
+  const cropHome = useSelector((state) => state.cropReducers.cropHome);
+
+  const analyzeHome = useSelector((state) => state.cropReducers.analyzeHome);
+
+  // =========================================================
+  // STATE
+  // =========================================================
+
+  const [loading, setLoading] = useState(true);
+  const [selectedFarm, setSelectedFarm] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // =========================================================
+  // USER
+  // =========================================================
+
+  const fullName = userLogin?.loginUser?.fullName || "User";
 
   const role = userLogin?.Role?.name || userLogin?.role || "User";
 
-  /*
-    |--------------------------------------------------------------------------
-    | LOADING
-    |--------------------------------------------------------------------------
-    */
+  // =========================================================
+  // FETCH FARM
+  // =========================================================
+
+  useEffect(() => {
+    if (userLogin?.access_token) {
+      dispatch(fetchFarms(userLogin.access_token));
+    }
+  }, [userLogin?.access_token, dispatch]);
+
+  // =========================================================
+  // SET DEFAULT FARM
+  // =========================================================
+
+  useEffect(() => {
+    if (!farms || farms.length === 0) {
+      setSelectedFarm(null);
+      return;
+    }
+
+    // Belum ada farm yang dipilih
+    if (!selectedFarm) {
+      setSelectedFarm(farms[0]);
+      return;
+    }
+
+    // Cek apakah farm yang dipilih masih ada
+    const currentFarmStillExists = farms.some(
+      (farm) => Number(farm.id) === Number(selectedFarm.id),
+    );
+
+    if (!currentFarmStillExists) {
+      setSelectedFarm(farms[0]);
+    }
+  }, [farms, selectedFarm]);
+
+  // =========================================================
+  // LOAD CROP HEALTH BERDASARKAN FARM
+  // =========================================================
+
+  useEffect(() => {
+    if (!selectedFarm?.id) {
+      return;
+    }
+
+    console.log("Load Crop Health Farm:", selectedFarm.id);
+
+    dispatch(cropHealthHome(selectedFarm.id));
+  }, [selectedFarm?.id, dispatch]);
+
+  // =========================================================
+  // ANALYZE CROP HEALTH
+  // =========================================================
+
+  useEffect(() => {
+    if (!selectedFarm?.id || !cropHome?.farmId || !cropHome?.cropId) {
+      return;
+    }
+
+    // Jangan gunakan data crop dari farm sebelumnya
+    if (Number(cropHome.farmId) !== Number(selectedFarm.id)) {
+      return;
+    }
+
+    console.log("Analyze Crop Health:", {
+      farmId: cropHome.farmId,
+      cropId: cropHome.cropId,
+    });
+
+    dispatch(
+      cropHealthAnalyzeHome({
+        farmId: cropHome.farmId,
+        cropId: cropHome.cropId,
+      }),
+    );
+  }, [selectedFarm?.id, cropHome?.farmId, cropHome?.cropId, dispatch]);
+
+  // =========================================================
+  // LOADING
+  // =========================================================
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 1500);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
 
-  /*
-    |--------------------------------------------------------------------------
-    | LOTTIE
-    |--------------------------------------------------------------------------
-    */
+  // =========================================================
+  // LOTTIE
+  // =========================================================
 
   const defaultOptions = {
     loop: true,
@@ -65,11 +157,9 @@ export const Home = ({ logOutFunction }) => {
     },
   };
 
-  /*
-    |--------------------------------------------------------------------------
-    | LOGOUT
-    |--------------------------------------------------------------------------
-    */
+  // =========================================================
+  // LOGOUT
+  // =========================================================
 
   const handleLogout = () => {
     localStorage.clear();
@@ -85,23 +175,356 @@ export const Home = ({ logOutFunction }) => {
     });
   };
 
-  /*
-    |--------------------------------------------------------------------------
-    | NAVIGATION
-    |--------------------------------------------------------------------------
-    */
+  // =========================================================
+  // NAVIGATION
+  // =========================================================
 
   const handleNavigation = (path) => {
     setSidebarOpen(false);
-
     navigate(path);
   };
+
+  // =========================================================
+  // DATE FORMAT
+  // =========================================================
+
+  const formatDateTime = (date) => {
+    if (!date) {
+      return "--";
+    }
+
+    const parsedDate = new Date(date);
+
+    if (Number.isNaN(parsedDate.getTime())) {
+      return "--";
+    }
+
+    return parsedDate.toLocaleString("id-ID", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
+  };
+
+  // =========================================================
+  // CROP HEALTH
+  // =========================================================
+
+  const hasCropHealth =
+    cropHome?.overallScore !== null &&
+    cropHome?.overallScore !== undefined &&
+    !Number.isNaN(Number(cropHome?.overallScore));
+
+  // =========================================================
+  // HEALTH DESCRIPTION
+  // =========================================================
+
+  const getHealthDescription = (score, type) => {
+    if (score === null || score === undefined || Number.isNaN(Number(score))) {
+      return {
+        title: `${type} belum dianalisis`,
+        description: "Belum tersedia data analisis untuk tanaman ini.",
+      };
+    }
+
+    const numericScore = Number(score);
+
+    if (numericScore <= 25) {
+      return {
+        title: `${type} dalam kondisi buruk`,
+        description: `Perlu perhatian dan penanganan segera pada kondisi ${type.toLowerCase()}.`,
+      };
+    }
+
+    if (numericScore <= 50) {
+      return {
+        title: `${type} perlu perhatian`,
+        description: `Kondisi ${type.toLowerCase()} masih kurang optimal dan perlu dilakukan pemantauan lebih lanjut.`,
+      };
+    }
+
+    if (numericScore <= 75) {
+      return {
+        title: `${type} dalam kondisi cukup baik`,
+        description: `Perlu perhatian pada kondisi ${type.toLowerCase()} agar tetap optimal.`,
+      };
+    }
+
+    return {
+      title: `${type} dalam kondisi sangat baik`,
+      description: `Kondisi ${type.toLowerCase()} sangat baik dan berada dalam kondisi optimal.`,
+    };
+  };
+
+  const overallHealth = getHealthDescription(cropHome?.overallScore, "Tanaman");
+
+  // =========================================================
+  // HEALTH STATUS
+  // =========================================================
+
+  const getHealthStatus = (score) => {
+    if (score === null || score === undefined || Number.isNaN(Number(score))) {
+      return {
+        className: "offline",
+        label: "NO DATA",
+      };
+    }
+
+    const numericScore = Number(score);
+
+    if (numericScore <= 25) {
+      return {
+        className: "bad",
+        label: "BAD",
+      };
+    }
+
+    if (numericScore <= 50) {
+      return {
+        className: "poor",
+        label: "POOR",
+      };
+    }
+
+    if (numericScore <= 75) {
+      return {
+        className: "moderate",
+        label: "MODERATE",
+      };
+    }
+
+    return {
+      className: "excellent",
+      label: "EXCELLENT",
+    };
+  };
+
+  const healthStatus = getHealthStatus(cropHome?.overallScore);
+
+  // =========================================================
+  // SENSOR DATA
+  // =========================================================
+
+  const sensorData = analyzeHome?.sensor || analyzeHome?.sensorData || null;
+
+  // =========================================================
+  // SENSOR STATUS
+  // =========================================================
+
+  const sensorOnline = sensorData?.sensorStatus === "ONLINE";
+
+  const sensorOffline = sensorData?.sensorStatus === "OFFLINE";
+
+  const hasSensorData = sensorData !== null && sensorData !== undefined;
+
+  // =========================================================
+  // SENSOR HAS REAL READING
+  // =========================================================
+
+  const hasSensorReading =
+    sensorOnline &&
+    sensorData?.soilMoisture !== null &&
+    sensorData?.soilMoisture !== undefined;
+
+  // =========================================================
+  // SENSOR STATUS LABEL
+  // =========================================================
+
+  const getSensorStatusLabel = () => {
+    if (sensorOnline) {
+      return "ESP32 Online";
+    }
+
+    if (sensorOffline) {
+      return "ESP32 Offline";
+    }
+
+    return "Waiting for Sensor";
+  };
+
+  // =========================================================
+  // RECOMMENDATION
+  // =========================================================
+
+  const getRecommendation = () => {
+    // Belum ada sensor
+    if (!hasSensorReading) {
+      return {
+        available: false,
+        priority: "NO DATA",
+        title: "Belum ada rekomendasi",
+        description:
+          "Rekomendasi akan tersedia setelah sistem menerima pembacaan sensor dari farm ini.",
+        id: "--",
+        duration: "--",
+      };
+    }
+
+    const soilMoisture = Number(sensorData.soilMoisture);
+
+    // Kondisi sangat kering
+    if (soilMoisture < 40) {
+      return {
+        available: true,
+        priority: "PRIORITY HIGH",
+        title: "Penyiraman Tanaman",
+        description:
+          "Kelembapan tanah berada di bawah kondisi optimal. Sistem menyarankan penyiraman tanaman.",
+        id: "#REC-001",
+        duration: "5 Minutes",
+      };
+    }
+
+    // Kondisi cukup
+    if (soilMoisture < 60) {
+      return {
+        available: true,
+        priority: "PRIORITY MEDIUM",
+        title: "Monitoring Kelembapan Tanah",
+        description:
+          "Kelembapan tanah cukup tetapi perlu dipantau untuk menjaga kondisi tanaman tetap optimal.",
+        id: "#REC-002",
+        duration: "Monitoring",
+      };
+    }
+
+    // Kondisi optimal
+    return {
+      available: true,
+      priority: "PRIORITY LOW",
+      title: "Kondisi Tanaman Optimal",
+      description:
+        "Kelembapan tanah berada dalam kondisi baik. Tidak diperlukan tindakan penyiraman saat ini.",
+      id: "#REC-003",
+      duration: "Monitoring",
+    };
+  };
+
+  const recommendation = getRecommendation();
+
+  // =========================================================
+  // RELAY STATUS
+  // =========================================================
+
+  const getRelayStatus = (type) => {
+    // Sensor tidak online
+    if (!sensorOnline) {
+      return {
+        status: "OFFLINE",
+        active: false,
+      };
+    }
+
+    // WATER PUMP
+    if (type === "waterPump") {
+      if (
+        sensorData?.waterPumpStatus !== null &&
+        sensorData?.waterPumpStatus !== undefined
+      ) {
+        const status = String(sensorData.waterPumpStatus).toUpperCase();
+
+        return {
+          status,
+          active: status === "ON",
+        };
+      }
+    }
+
+    // FERTILIZER PUMP
+    if (type === "fertilizerPump") {
+      if (
+        sensorData?.fertilizerPumpStatus !== null &&
+        sensorData?.fertilizerPumpStatus !== undefined
+      ) {
+        const status = String(sensorData.fertilizerPumpStatus).toUpperCase();
+
+        return {
+          status,
+          active: status === "ON",
+        };
+      }
+    }
+
+    // Belum ada data relay
+    return {
+      status: "NO DATA",
+      active: false,
+    };
+  };
+
+  const waterPump = getRelayStatus("waterPump");
+
+  const fertilizerPump = getRelayStatus("fertilizerPump");
+
+  // =========================================================
+  // RECENT ACTIVITY
+  // =========================================================
+
+  const activityList = [];
+
+  // Sensor activity
+  if (sensorOnline && sensorData?.lastReadingAt) {
+    activityList.push({
+      icon: "📡",
+      title: "Sensor Reading Received",
+      description: sensorData?.deviceId || sensorData?.sensorId || "Sensor IoT",
+      time: formatDateTime(sensorData.lastReadingAt),
+    });
+  }
+
+  // Crop health activity
+  if (hasCropHealth && cropHome?.updatedAt) {
+    activityList.push({
+      icon: "🌱",
+      title: "Crop Health Updated",
+      description: `Overall score: ${cropHome.overallScore}`,
+      time: formatDateTime(cropHome.updatedAt),
+    });
+  }
+
+  // Water pump activity
+  if (waterPump.status === "ON") {
+    activityList.push({
+      icon: "💧",
+      title: "Water Pump Activated",
+      description: "Irrigation System",
+      time: sensorData?.lastReadingAt
+        ? formatDateTime(sensorData.lastReadingAt)
+        : "--",
+      success: true,
+    });
+  }
+
+  // =========================================================
+  // DEBUG
+  // =========================================================
+
+  console.log("HOME - Selected Farm:", selectedFarm);
+
+  console.log("HOME - Crop Home:", cropHome);
+
+  console.log("HOME - Analyze Home:", analyzeHome);
+
+  console.log("HOME - Sensor:", sensorData);
+
+  console.log("HOME - Recommendation:", recommendation);
+
+  console.log("HOME - Water Pump:", waterPump);
+
+  console.log("HOME - Fertilizer Pump:", fertilizerPump);
+
+  // =========================================================
+  // RENDER
+  // =========================================================
 
   return (
     <div className="smartagri-layout">
       {/* =====================================================
-                LOADING
-            ===================================================== */}
+          LOADING
+      ===================================================== */}
 
       {loading && (
         <div className="loading-overlay">
@@ -110,8 +533,8 @@ export const Home = ({ logOutFunction }) => {
       )}
 
       {/* =====================================================
-                MOBILE OVERLAY
-            ===================================================== */}
+          MOBILE OVERLAY
+      ===================================================== */}
 
       {sidebarOpen && (
         <div
@@ -121,8 +544,8 @@ export const Home = ({ logOutFunction }) => {
       )}
 
       {/* =====================================================
-                SIDEBAR
-            ===================================================== */}
+          SIDEBAR
+      ===================================================== */}
 
       <Sidebar
         sidebarOpen={sidebarOpen}
@@ -131,13 +554,13 @@ export const Home = ({ logOutFunction }) => {
       />
 
       {/* =====================================================
-                MAIN AREA
-            ===================================================== */}
+          MAIN
+      ===================================================== */}
 
       <main className="smartagri-main">
         {/* =================================================
-                    TOPBAR
-                ================================================= */}
+            TOPBAR
+        ================================================= */}
 
         <header className="smartagri-topbar">
           <button
@@ -176,11 +599,13 @@ export const Home = ({ logOutFunction }) => {
         </header>
 
         {/* =================================================
-                    CONTENT
-                ================================================= */}
+            CONTENT
+        ================================================= */}
 
         <div className="smartagri-content">
-          {/* WELCOME */}
+          {/* =================================================
+              WELCOME
+          ================================================= */}
 
           <section className="dashboard-welcome">
             <div>
@@ -200,7 +625,9 @@ export const Home = ({ logOutFunction }) => {
             </div>
           </section>
 
-          {/* FARM SELECTOR */}
+          {/* =================================================
+              FARM SELECTOR
+          ================================================= */}
 
           <section className="farm-selector-new">
             <div className="farm-selector-left">
@@ -209,25 +636,43 @@ export const Home = ({ logOutFunction }) => {
               <div>
                 <span>CURRENT FARM</span>
 
-                <strong>Smart Farm Subang</strong>
+                <strong>{selectedFarm?.name || "Belum ada farm"}</strong>
 
-                <small>Subang, Jawa Barat</small>
+                <small>{selectedFarm?.address || "--"}</small>
               </div>
             </div>
 
-            <select>
-              <option>Smart Farm Subang</option>
+            <select
+              value={selectedFarm?.id || ""}
+              disabled={!farms || farms.length === 0}
+              onChange={(e) => {
+                const farm = farms.find(
+                  (item) => Number(item.id) === Number(e.target.value),
+                );
 
-              <option>Smart Farm Jakarta</option>
+                setSelectedFarm(farm || null);
+              }}
+            >
+              {!farms || farms.length === 0 ? (
+                <option value="">Belum ada farm</option>
+              ) : (
+                farms.map((farm) => (
+                  <option key={farm.id} value={farm.id}>
+                    {farm.name}
+                  </option>
+                ))
+              )}
             </select>
           </section>
 
           {/* =================================================
-                        HEALTH
-                    ================================================= */}
+              HEALTH
+          ================================================= */}
 
           <section className="dashboard-grid health-section">
-            {/* OVERALL */}
+            {/* =================================================
+                OVERALL HEALTH
+            ================================================= */}
 
             <div className="card overall-card">
               <div className="card-header">
@@ -237,31 +682,44 @@ export const Home = ({ logOutFunction }) => {
                   <h2>Overall Health</h2>
                 </div>
 
-                <span className="status-pill moderate">MODERATE</span>
+                <span className={`status-pill ${healthStatus.className}`}>
+                  {healthStatus.label}
+                </span>
               </div>
 
               <div className="health-score-wrapper">
                 <div className="health-circle">
                   <div>
-                    <strong>{healthScore}</strong>
+                    <strong>
+                      {hasCropHealth ? cropHome.overallScore : "--"}
+                    </strong>
 
-                    <span>/100</span>
+                    {hasCropHealth && <span>/100</span>}
                   </div>
                 </div>
 
                 <div className="health-description">
-                  <strong>Tanaman dalam kondisi cukup baik</strong>
+                  <strong>{overallHealth.title}</strong>
 
-                  <p>
-                    Perlu perhatian pada kondisi tanah dan kelembapan tanaman.
-                  </p>
+                  <p>{overallHealth.description}</p>
                 </div>
               </div>
 
-              <div className="last-update">Updated 08 Aug 2026 • 14:32</div>
+              <div className="last-update">
+                {hasCropHealth && cropHome?.updatedAt ? (
+                  <>
+                    Terakhir diperbarui: {formatDateTime(cropHome.updatedAt)}{" "}
+                    WIB
+                  </>
+                ) : (
+                  "Belum ada data analisis"
+                )}
+              </div>
             </div>
 
-            {/* COMPONENTS */}
+            {/* =================================================
+                HEALTH COMPONENTS
+            ================================================= */}
 
             <div className="card health-components">
               <div className="card-header">
@@ -272,19 +730,35 @@ export const Home = ({ logOutFunction }) => {
                 </div>
               </div>
 
-              <HealthProgress title="Vegetation" value={68} icon="🌿" />
+              <HealthProgress
+                title="Vegetation"
+                value={cropHome?.vegetationScore}
+                icon="🌿"
+              />
 
-              <HealthProgress title="Climate" value={72} icon="☀️" />
+              <HealthProgress
+                title="Climate"
+                value={cropHome?.climateScore}
+                icon="☀️"
+              />
 
-              <HealthProgress title="Soil" value={45} icon="🌍" />
+              <HealthProgress
+                title="Soil"
+                value={cropHome?.soilScore}
+                icon="🌍"
+              />
 
-              <HealthProgress title="IoT" value={null} icon="📡" />
+              <HealthProgress
+                title="IoT"
+                value={cropHome?.iotScore}
+                icon="📡"
+              />
             </div>
           </section>
 
           {/* =================================================
-                        SENSOR
-                    ================================================= */}
+              SENSOR MONITORING
+          ================================================= */}
 
           <section>
             <div className="section-title">
@@ -294,53 +768,94 @@ export const Home = ({ logOutFunction }) => {
                 <h2>Sensor Monitoring</h2>
               </div>
 
-              <div className="device-status">
-                <span className="online-dot" />
-                ESP32 Online
+              <div
+                className={
+                  sensorOnline ? "device-status" : "device-status offline"
+                }
+              >
+                <span className={sensorOnline ? "online-dot" : "offline-dot"} />
+
+                {getSensorStatusLabel()}
               </div>
             </div>
+
+            {/* =================================================
+                SENSOR INFO
+            ================================================= */}
+
+            <div className="sensor-info-bar">
+              {!hasSensorData && (
+                <span>📡 Belum ada pembacaan sensor dari farm ini.</span>
+              )}
+
+              {sensorOffline && (
+                <span>
+                  ⚠️ Sensor sedang offline. Belum ada pembacaan terbaru.
+                </span>
+              )}
+
+              {sensorOnline && (
+                <span>🟢 Sensor aktif dan mengirim data secara realtime.</span>
+              )}
+
+              {sensorData?.lastReadingAt && (
+                <small>
+                  Last reading: {formatDateTime(sensorData.lastReadingAt)}
+                </small>
+              )}
+            </div>
+
+            {/* =================================================
+                SENSOR GRID
+            ================================================= */}
 
             <div className="sensor-grid">
               <SensorCard
                 icon="💧"
                 title="Soil Moisture"
-                value="32"
+                value={sensorData?.soilMoisture}
                 unit="%"
                 status="Optimal"
+                online={sensorOnline}
               />
 
               <SensorCard
                 icon="🌡️"
                 title="Temperature"
-                value="28.4"
+                value={sensorData?.temperature}
                 unit="°C"
                 status="Optimal"
+                online={sensorOnline}
               />
 
               <SensorCard
                 icon="💦"
                 title="Humidity"
-                value="67"
+                value={sensorData?.humidity}
                 unit="%"
                 status="Good"
+                online={sensorOnline}
               />
 
               <SensorCard
                 icon="☀️"
                 title="Light Intensity"
-                value="8,420"
+                value={sensorData?.lightIntensity}
                 unit="lux"
                 status="Good"
+                online={sensorOnline}
               />
             </div>
           </section>
 
           {/* =================================================
-                        RECOMMENDATION + RELAY
-                    ================================================= */}
+              RECOMMENDATION + RELAY
+          ================================================= */}
 
           <section className="dashboard-grid action-section">
-            {/* RECOMMENDATION */}
+            {/* =================================================
+                RECOMMENDATION
+            ================================================= */}
 
             <div className="card recommendation-card">
               <div className="card-header">
@@ -350,21 +865,34 @@ export const Home = ({ logOutFunction }) => {
                   <h2>Recommended Action</h2>
                 </div>
 
-                <span className="recommendation-status">NEW</span>
+                <span
+                  className={
+                    recommendation.available
+                      ? "recommendation-status"
+                      : "recommendation-status offline"
+                  }
+                >
+                  {recommendation.available ? "NEW" : "NO DATA"}
+                </span>
               </div>
 
               <div className="recommendation-main">
-                <div className="recommendation-icon">💧</div>
+                <div
+                  className={
+                    recommendation.available
+                      ? "recommendation-icon"
+                      : "recommendation-icon offline"
+                  }
+                >
+                  {recommendation.available ? "💧" : "📡"}
+                </div>
 
                 <div>
-                  <span>PRIORITY HIGH</span>
+                  <span>{recommendation.priority}</span>
 
-                  <h3>Penyiraman Tanaman</h3>
+                  <h3>{recommendation.title}</h3>
 
-                  <p>
-                    Kelembapan tanah berada di bawah kondisi optimal. Sistem
-                    menyarankan penyiraman tanaman.
-                  </p>
+                  <p>{recommendation.description}</p>
                 </div>
               </div>
 
@@ -372,20 +900,34 @@ export const Home = ({ logOutFunction }) => {
                 <div>
                   <span>Recommendation ID</span>
 
-                  <strong>#REC-001</strong>
+                  <strong>{recommendation.id}</strong>
                 </div>
 
                 <div>
                   <span>Duration</span>
 
-                  <strong>5 Minutes</strong>
+                  <strong>{recommendation.duration}</strong>
                 </div>
               </div>
 
-              <button className="primary-button">View Recommendation</button>
+              <button
+                className="primary-button"
+                disabled={!recommendation.available}
+                onClick={() => {
+                  if (recommendation.available) {
+                    console.log("View Recommendation:", recommendation);
+                  }
+                }}
+              >
+                {recommendation.available
+                  ? "View Recommendation"
+                  : "No Recommendation"}
+              </button>
             </div>
 
-            {/* RELAY */}
+            {/* =================================================
+                RELAY
+            ================================================= */}
 
             <div className="card relay-card">
               <div className="card-header">
@@ -401,30 +943,32 @@ export const Home = ({ logOutFunction }) => {
               <RelayItem
                 title="Water Pump"
                 description="Irrigation System"
-                status="ON"
-                active
+                status={waterPump.status}
+                active={waterPump.active}
               />
 
               <RelayItem
                 title="Fertilizer Pump"
                 description="Fertilization System"
-                status="OFF"
+                status={fertilizerPump.status}
+                active={fertilizerPump.active}
               />
 
               <div className="relay-info">
-                <span>🤖</span>
+                <span>{sensorOnline ? "🤖" : "📡"}</span>
 
                 <p>
-                  Relay dikontrol otomatis berdasarkan recommendation dari
-                  sistem.
+                  {sensorOnline
+                    ? "Relay dikontrol otomatis berdasarkan kondisi sensor dan recommendation dari sistem."
+                    : "Relay belum tersedia karena belum ada pembacaan sensor dari farm ini."}
                 </p>
               </div>
             </div>
           </section>
 
           {/* =================================================
-                        ACTIVITY
-                    ================================================= */}
+              RECENT ACTIVITY
+          ================================================= */}
 
           <section className="card activity-card">
             <div className="section-title">
@@ -434,35 +978,46 @@ export const Home = ({ logOutFunction }) => {
                 <h2>Recent Activity</h2>
               </div>
 
-              <button className="text-button">View All</button>
+              <button
+                className="text-button"
+                onClick={() => handleNavigation("/activity")}
+              >
+                View All
+              </button>
             </div>
 
             <div className="activity-list">
-              <Activity
-                icon="💧"
-                title="Water Pump Activated"
-                description="Recommendation #REC-001"
-                time="2 minutes ago"
-                success
-              />
+              {activityList.length === 0 ? (
+                <div className="activity-empty">
+                  <div className="activity-empty-icon">📡</div>
 
-              <Activity
-                icon="📡"
-                title="Sensor Reading Received"
-                description="ESP32-001"
-                time="8 minutes ago"
-              />
+                  <div>
+                    <strong>Belum ada aktivitas</strong>
 
-              <Activity
-                icon="🌱"
-                title="Crop Health Updated"
-                description="Overall score: 64"
-                time="15 minutes ago"
-              />
+                    <span>
+                      Aktivitas akan muncul setelah sistem menerima pembacaan
+                      sensor atau melakukan analisis.
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                activityList.map((activity, index) => (
+                  <Activity
+                    key={`${activity.title}-${index}`}
+                    icon={activity.icon}
+                    title={activity.title}
+                    description={activity.description}
+                    time={activity.time}
+                    success={activity.success}
+                  />
+                ))
+              )}
             </div>
           </section>
 
-          {/* FOOTER */}
+          {/* =================================================
+              FOOTER
+          ================================================= */}
 
           <footer className="dashboard-footer">
             <span>SmartAgri © 2026</span>
@@ -479,43 +1034,15 @@ export const Home = ({ logOutFunction }) => {
 };
 
 /* =============================================================
-   SIDEBAR SECTION
-============================================================= */
-
-const SidebarSection = ({ title, children }) => {
-  return (
-    <div className="sidebar-section">
-      <div className="sidebar-section-title">{title}</div>
-
-      {children}
-    </div>
-  );
-};
-
-/* =============================================================
-   SIDEBAR ITEM
-============================================================= */
-
-const SidebarItem = ({ icon, label, active, badge, onClick }) => {
-  return (
-    <button
-      className={active ? "sidebar-item active" : "sidebar-item"}
-      onClick={onClick}
-    >
-      <span className="sidebar-item-icon">{icon}</span>
-
-      <span className="sidebar-item-label">{label}</span>
-
-      {badge && <span className="sidebar-item-badge">{badge}</span>}
-    </button>
-  );
-};
-
-/* =============================================================
    HEALTH PROGRESS
 ============================================================= */
 
 const HealthProgress = ({ title, value, icon }) => {
+  const hasValue =
+    value !== null && value !== undefined && !Number.isNaN(Number(value));
+
+  const numericValue = hasValue ? Number(value) : 0;
+
   return (
     <div className="health-progress">
       <div className="health-progress-top">
@@ -525,14 +1052,16 @@ const HealthProgress = ({ title, value, icon }) => {
           {title}
         </div>
 
-        <strong>{value !== null ? value : "--"}</strong>
+        <strong>{hasValue ? numericValue : "--"}</strong>
       </div>
 
       <div className="progress-track">
         <div
           className="progress-value"
           style={{
-            width: value !== null ? `${value}%` : "0%",
+            width: hasValue
+              ? `${Math.max(0, Math.min(numericValue, 100))}%`
+              : "0%",
           }}
         />
       </div>
@@ -544,24 +1073,37 @@ const HealthProgress = ({ title, value, icon }) => {
    SENSOR CARD
 ============================================================= */
 
-const SensorCard = ({ icon, title, value, unit, status }) => {
+const SensorCard = ({ icon, title, value, unit, status, online }) => {
+  const hasValue =
+    value !== null && value !== undefined && !Number.isNaN(Number(value));
+
+  const displayValue = hasValue ? Number(value) : "--";
+
+  const displayUnit = hasValue ? unit : "";
+
+  const isLive = online && hasValue;
+
   return (
-    <div className="sensor-card">
+    <div className={`sensor-card ${!isLive ? "sensor-offline" : ""}`}>
       <div className="sensor-card-top">
         <div className="sensor-icon">{icon}</div>
 
-        <span className="sensor-live">LIVE</span>
+        <span className={isLive ? "sensor-live" : "sensor-offline-badge"}>
+          {isLive ? "LIVE" : "OFFLINE"}
+        </span>
       </div>
 
       <span className="sensor-title">{title}</span>
 
       <div className="sensor-value">
-        <strong>{value}</strong>
+        <strong>{displayValue}</strong>
 
-        <span>{unit}</span>
+        <span>{displayUnit}</span>
       </div>
 
-      <span className="sensor-status">● {status}</span>
+      <span className={`sensor-status ${!isLive ? "offline" : ""}`}>
+        ● {!online ? "Offline" : !hasValue ? "No Data" : status}
+      </span>
     </div>
   );
 };
@@ -571,6 +1113,10 @@ const SensorCard = ({ icon, title, value, unit, status }) => {
 ============================================================= */
 
 const RelayItem = ({ title, description, status, active }) => {
+  const isOffline = status === "OFFLINE";
+
+  const isNoData = status === "NO DATA";
+
   return (
     <div className="relay-item">
       <div className="relay-icon">⚡</div>
@@ -584,7 +1130,7 @@ const RelayItem = ({ title, description, status, active }) => {
       <div className={active ? "relay-status active" : "relay-status"}>
         <span />
 
-        {status}
+        {isOffline ? "OFFLINE" : isNoData ? "NO DATA" : status}
       </div>
     </div>
   );
@@ -607,7 +1153,7 @@ const Activity = ({ icon, title, description, time, success }) => {
         <span>{description}</span>
       </div>
 
-      <time>{time}</time>
+      <time>{time || "--"}</time>
     </div>
   );
 };

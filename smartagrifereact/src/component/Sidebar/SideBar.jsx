@@ -114,17 +114,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, logOutFunction }) => {
           />
           <SidebarItem
             icon="🌱"
+            label="Farm Overview"
+            active={isActive("/farm")}
+            onClick={() => handleNavigation("/farm")}
+          />
+          <SidebarItem
+            icon="🌱"
             label="Crop Overview"
             active={isActive("/crop")}
             onClick={() => handleNavigation("/crop")}
           />
 
-          <SidebarItem
-            icon="🌱"
-            label="Farm Overview"
-            active={isActive("/farm")}
-            onClick={() => handleNavigation("/farm")}
-          />
+          
         </SidebarSection>
 
         {/* MONITORING */}
@@ -189,12 +190,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, logOutFunction }) => {
             onClick={() => handleNavigation("/gis")}
           />
 
-          <SidebarItem
-            icon="📊"
-            label="History"
-            active={isActive("/history")}
-            onClick={() => handleNavigation("/history")}
-          />
+          {/* <SidebarItem
+              icon="📊"
+              label="History"
+              active={isActive("/history")}
+              onClick={() => handleNavigation("/history")}
+            /> */}
         </SidebarSection>
       </nav>
 

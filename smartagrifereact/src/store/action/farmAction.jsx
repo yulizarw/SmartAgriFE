@@ -6,10 +6,17 @@ import axios from "../../config/axios";
 |--------------------------------------------------------------------------
 */
 
-export const fetchFarms = () => {
+export const fetchFarms = (access_token) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get("/farm");
+      
+      const { data } = await axios.get("/patriot/list-farm"
+        ,{
+        headers:{
+          access_token
+        }
+      }
+    );
 
       dispatch({
         type: "GET_FARMS",
@@ -27,10 +34,16 @@ export const fetchFarms = () => {
 |--------------------------------------------------------------------------
 */
 
-export const addFarm = (farmData) => {
+export const addFarm = ({farmData, access_token}) => {
   return async (dispatch) => {
+
+   
     try {
-      const { data } = await axios.post("/farm", farmData);
+      const { data } = await axios.post("patriot/create-farm", farmData, {
+        headers: {
+          access_token,
+        },
+      });
 
       dispatch({
         type: "ADD_FARM",
@@ -58,10 +71,15 @@ export const addFarm = (farmData) => {
 |--------------------------------------------------------------------------
 */
 
-export const updateFarm = (id, farmData) => {
+export const updateFarm = (id, farmData,access_token) => {
   return async (dispatch) => {
+    console.log(id)
     try {
-      const { data } = await axios.put(`/farm/${id}`, farmData);
+      const { data } = await axios.patch(`patriot/update-farm/${id}`, farmData, {
+        headers: {
+          access_token,
+        },
+      });
 
       dispatch({
         type: "UPDATE_FARM",
@@ -89,10 +107,14 @@ export const updateFarm = (id, farmData) => {
 |--------------------------------------------------------------------------
 */
 
-export const deleteFarm = (id) => {
+export const deleteFarm = (id,access_token) => {
   return async (dispatch) => {
     try {
-      await axios.delete(`/farm/${id}`);
+      await axios.delete(`patriot/delete-farm/${id}`, {
+        headers: {
+          access_token,
+        },
+      });
 
       dispatch({
         type: "DELETE_FARM",
