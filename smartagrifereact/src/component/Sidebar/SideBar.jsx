@@ -112,6 +112,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, logOutFunction }) => {
             active={isActive("/home")}
             onClick={() => handleNavigation("/home")}
           />
+          <SidebarItem
+            icon="🌱"
+            label="Crop Overview"
+            active={isActive("/crop")}
+            onClick={() => handleNavigation("/crop")}
+          />
 
           <SidebarItem
             icon="🌱"

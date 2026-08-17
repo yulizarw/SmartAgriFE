@@ -1,0 +1,103 @@
+.gee-connection-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  padding: 22px;
+
+  background: #ffffff;
+  border: 1px solid #e5ebe6;
+  border-radius: 18px;
+
+  box-shadow: 0 8px 25px rgba(20, 40, 25, 0.04);
+
+  margin-bottom: 24px;
+}
+
+.gee-connection-icon {
+  width: 54px;
+  height: 54px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+
+  background: #ecfdf5;
+
+  font-size: 26px;
+}
+
+.gee-connection-content {
+  flex: 1;
+}
+
+.gee-section-label {
+  display: block;
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+
+  color: #6b756e;
+
+  margin-bottom: 4px;
+}
+
+.gee-connection-content h3 {
+  margin: 0;
+
+  color: #17231a;
+  font-size: 17px;
+}
+
+.gee-connection-content p {
+  margin: 5px 0 0;
+
+  color: #737d76;
+  font-size: 13px;
+}
+
+.gee-connection-result {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  margin-top: 8px;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.gee-connection-result.success {
+  color: #15803d;
+}
+
+.gee-connection-result.failed {
+  color: #dc2626;
+}
+
+.gee-connect-button {
+  border: none;
+  border-radius: 10px;
+
+  padding: 11px 16px;
+
+  background: #15803d;
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.gee-connect-button:hover {
+  background: #166534;
+}
+
+.gee-connect-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

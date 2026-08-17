@@ -1,0 +1,103 @@
+.gee-history-panel {
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  padding: 22px;
+
+  background: linear-gradient(
+    135deg,
+    #f0fdf4,
+    #ffffff
+  );
+
+  border: 1px solid #dcefe1;
+
+  border-radius: 18px;
+}
+
+.gee-history-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: #dcfce7;
+
+  font-size: 24px;
+}
+
+.gee-history-content {
+  flex: 1;
+}
+
+.gee-history-content > span {
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  color: #6b756e;
+}
+
+.gee-history-content h3 {
+  margin: 4px 0;
+
+  font-size: 17px;
+
+  color: #17231a;
+}
+
+.gee-history-content p {
+  margin: 0;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+
+  color: #737d76;
+}
+
+.gee-history-panel button {
+  border: none;
+
+  border-radius: 10px;
+
+  padding: 11px 16px;
+
+  background: #15803d;
+
+  color: #ffffff;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.gee-history-panel button:hover {
+  background: #166534;
+}
+
+.gee-history-panel button:disabled {
+  opacity: 0.6;
+}
+
+@media (max-width: 700px) {
+  .gee-history-panel {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .gee-history-panel button {
+    width: 100%;
+  }
+}

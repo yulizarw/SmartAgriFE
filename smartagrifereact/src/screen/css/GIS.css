@@ -1,0 +1,798 @@
+/* =========================================================
+   GIS PAGE
+========================================================= */
+
+.gis-page {
+  min-height: 100vh;
+
+  margin-left: 260px;
+
+  padding: 32px 40px 50px;
+
+  box-sizing: border-box;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f8faf9 0%,
+      #f3f7f4 100%
+    );
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.gis-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 22px;
+}
+
+.gis-eyebrow {
+  display: block;
+
+  margin-bottom: 6px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+  color: #15803d;
+}
+
+.gis-header h1 {
+  margin: 0;
+
+  font-size: 30px;
+
+  line-height: 1.2;
+
+  color: #0f172a;
+}
+
+.gis-header p {
+  margin: 8px 0 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+.gis-header-status {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 10px 14px;
+
+  border-radius: 999px;
+
+  background: #ecfdf5;
+
+  color: #15803d;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+.gis-status-dot {
+  width: 8px;
+
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #22c55e;
+}
+
+
+/* =========================================================
+   ALERT
+========================================================= */
+
+.gis-alert {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 12px;
+
+  padding: 14px 16px;
+
+  margin-bottom: 22px;
+
+  border-radius: 14px;
+
+  background: #fff7ed;
+
+  border: 1px solid #fed7aa;
+
+  color: #9a3412;
+}
+
+.gis-alert > div {
+  flex: 1;
+}
+
+.gis-alert strong {
+  display: block;
+}
+
+.gis-alert p {
+  margin: 4px 0 0;
+}
+
+.gis-alert button {
+  border: none;
+
+  background: transparent;
+
+  font-size: 20px;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   FARM SELECTOR
+========================================================= */
+
+.gis-farm-selector {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 25px;
+
+  padding: 20px 22px;
+
+  margin-bottom: 22px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 16px;
+
+  box-sizing: border-box;
+}
+
+.gis-section-label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.2px;
+
+  color: #15803d;
+}
+
+.gis-farm-selector h2 {
+  margin: 0;
+
+  font-size: 20px;
+
+  color: #0f172a;
+}
+
+.gis-farm-selector p {
+  margin: 5px 0 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+}
+
+.gis-farm-select-wrapper {
+  min-width: 260px;
+}
+
+.gis-farm-select-wrapper label {
+  display: block;
+
+  margin-bottom: 6px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  color: #475569;
+}
+
+.gis-farm-select-wrapper select {
+  width: 100%;
+
+  padding: 11px 13px;
+
+  border-radius: 10px;
+
+  border: 1px solid #cbd5e1;
+
+  background: #ffffff;
+
+  color: #0f172a;
+
+  outline: none;
+
+  box-sizing: border-box;
+}
+
+.gis-farm-select-wrapper select:focus {
+  border-color: #16a34a;
+
+  box-shadow:
+    0 0 0 3px rgba(22, 163, 74, 0.1);
+}
+
+
+/* =========================================================
+   MAIN GRID
+========================================================= */
+
+.gis-main-grid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.45fr)
+    minmax(360px, 0.8fr);
+
+  gap: 22px;
+
+  align-items: start;
+}
+
+.gis-map-column,
+.gis-analysis-column {
+  min-width: 0;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.gis-map-card,
+.gis-farm-info,
+.gis-analysis-card {
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-sizing: border-box;
+}
+
+.gis-farm-info {
+  margin-top: 22px;
+
+  padding: 20px 22px;
+}
+
+.gis-analysis-card {
+  padding: 0;
+}
+
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
+.gis-card-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 18px 20px;
+
+  border-bottom: 1px solid #edf2f7;
+}
+
+.gis-card-header span {
+  display: block;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.2px;
+
+  color: #15803d;
+}
+
+.gis-card-header h3 {
+  margin: 5px 0 0;
+
+  font-size: 18px;
+
+  color: #0f172a;
+}
+
+.gis-map-badge {
+  padding: 7px 10px;
+
+  border-radius: 8px;
+
+  background: #f0fdf4;
+
+  color: #15803d;
+
+  font-size: 11px;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   MAP
+========================================================= */
+
+.gis-map-container {
+  width: 100%;
+
+  height: 500px;
+}
+
+.gis-leaflet-map {
+  width: 100%;
+
+  height: 100%;
+}
+
+
+/* =========================================================
+   FARM INFO
+========================================================= */
+
+.gis-info-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 15px;
+
+  margin-top: 20px;
+}
+
+.gis-info-grid div {
+  padding: 12px;
+
+  border-radius: 10px;
+
+  background: #f8fafc;
+}
+
+.gis-info-grid span,
+.gis-address span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 11px;
+
+  color: #64748b;
+}
+
+.gis-info-grid strong {
+  display: block;
+
+  font-size: 13px;
+
+  color: #0f172a;
+
+  word-break: break-word;
+}
+
+.gis-address {
+  margin-top: 15px;
+
+  padding-top: 15px;
+
+  border-top: 1px solid #edf2f7;
+}
+
+.gis-address p {
+  margin: 0;
+
+  color: #475569;
+
+  font-size: 13px;
+}
+
+.gis-farm-status {
+  padding: 6px 10px;
+
+  border-radius: 999px;
+
+  background: #ecfdf5;
+
+  color: #15803d !important;
+
+  font-size: 10px !important;
+}
+
+
+/* =========================================================
+   ANALYSIS
+========================================================= */
+
+.gis-analysis-card > .gis-card-header {
+  padding: 20px;
+}
+
+.gis-analysis-block {
+  padding: 20px;
+
+  border-bottom: 1px solid #edf2f7;
+}
+
+.gis-analysis-title {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 15px;
+}
+
+.gis-analysis-title > div {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+.gis-analysis-icon {
+  display: flex !important;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 38px;
+
+  height: 38px;
+
+  border-radius: 10px;
+
+  background: #f0fdf4;
+
+  font-size: 18px !important;
+
+  letter-spacing: 0 !important;
+}
+
+.gis-analysis-title strong {
+  display: block;
+
+  font-size: 14px;
+
+  color: #0f172a;
+}
+
+.gis-analysis-title small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   DATE INPUT
+========================================================= */
+
+.gis-analysis-block label {
+  display: block;
+
+  margin-bottom: 6px;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  color: #475569;
+}
+
+.gis-analysis-block input {
+  width: 100%;
+
+  padding: 10px 11px;
+
+  border-radius: 9px;
+
+  border: 1px solid #cbd5e1;
+
+  background: #ffffff;
+
+  color: #0f172a;
+
+  box-sizing: border-box;
+
+  outline: none;
+}
+
+.gis-analysis-block input:focus {
+  border-color: #16a34a;
+
+  box-shadow:
+    0 0 0 3px rgba(22, 163, 74, 0.08);
+}
+
+.gis-date-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 10px;
+
+  margin-bottom: 12px;
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.gis-analysis-button {
+  width: 100%;
+
+  margin-top: 12px;
+
+  padding: 11px 14px;
+
+  border: none;
+
+  border-radius: 9px;
+
+  background: #15803d;
+
+  color: #ffffff;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.gis-analysis-button:hover {
+  background: #166534;
+}
+
+.gis-analysis-button:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
+
+.gis-analysis-button.secondary {
+  background: #0f766e;
+}
+
+.gis-analysis-button.secondary:hover {
+  background: #115e59;
+}
+
+
+/* =========================================================
+   RESULT
+========================================================= */
+
+.gis-result {
+  margin-top: 14px;
+
+  border-radius: 10px;
+
+  overflow: hidden;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+}
+
+.gis-result-header {
+  padding: 8px 11px;
+
+  background: #f1f5f9;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  color: #475569;
+}
+
+.gis-result pre {
+  max-height: 220px;
+
+  overflow: auto;
+
+  margin: 0;
+
+  padding: 12px;
+
+  white-space: pre-wrap;
+
+  word-break: break-word;
+
+  font-size: 11px;
+
+  line-height: 1.6;
+
+  color: #334155;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.gis-analysis-empty {
+  padding: 45px 20px;
+
+  text-align: center;
+}
+
+.gis-analysis-empty span {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 30px;
+}
+
+.gis-analysis-empty strong {
+  display: block;
+
+  color: #0f172a;
+}
+
+.gis-analysis-empty p {
+  margin: 7px 0 0;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
+.gis-farm-info.empty {
+  padding: 25px;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.gis-analysis-error {
+  margin: 15px 20px 20px;
+
+  padding: 11px 13px;
+
+  border-radius: 9px;
+
+  background: #fff7ed;
+
+  border: 1px solid #fed7aa;
+
+  color: #9a3412;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1200px) {
+
+  .gis-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gis-analysis-column {
+    width: 100%;
+  }
+
+  .gis-info-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+}
+
+
+@media (max-width: 1100px) {
+
+  .gis-page {
+    margin-left: 0;
+
+    padding: 24px;
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .gis-page {
+    padding: 20px 15px 35px;
+  }
+
+  .gis-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .gis-farm-selector {
+    align-items: stretch;
+
+    flex-direction: column;
+  }
+
+  .gis-farm-select-wrapper {
+    min-width: 0;
+
+    width: 100%;
+  }
+
+  .gis-map-container {
+    height: 400px;
+  }
+
+  .gis-date-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+@media (max-width: 500px) {
+
+  .gis-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gis-map-container {
+    height: 350px;
+  }
+
+}

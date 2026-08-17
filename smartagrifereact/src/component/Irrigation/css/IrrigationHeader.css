@@ -1,0 +1,117 @@
+.irrigation-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.irrigation-eyebrow {
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+
+  color: #15803d;
+
+  margin-bottom: 6px;
+}
+
+.irrigation-header h1 {
+  margin: 0;
+
+  font-size: 30px;
+
+  font-weight: 800;
+
+  color: #17251d;
+}
+
+.irrigation-header p {
+  margin: 8px 0 0;
+
+  color: #64756b;
+
+  font-size: 14px;
+}
+
+.irrigation-header-status {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 13px 18px;
+
+  border-radius: 16px;
+
+  background: white;
+
+  border: 1px solid #e3ebe5;
+}
+
+.irrigation-header-status > div {
+  display: flex;
+
+  flex-direction: column;
+}
+
+.irrigation-header-status small {
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  color: #809087;
+}
+
+.irrigation-header-status strong {
+  margin-top: 3px;
+
+  font-size: 14px;
+}
+
+.irrigation-header-status.on strong {
+  color: #15803d;
+}
+
+.irrigation-header-status.off strong {
+  color: #64748b;
+}
+
+.irrigation-status-dot {
+  width: 11px;
+
+  height: 11px;
+
+  border-radius: 50%;
+
+  background: #94a3b8;
+}
+
+.irrigation-header-status.on
+  .irrigation-status-dot {
+  background: #22c55e;
+
+  box-shadow:
+    0 0 0 5px rgba(34, 197, 94, 0.12);
+}
+
+@media (max-width: 700px) {
+  .irrigation-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .irrigation-header-status {
+    width: 100%;
+
+    box-sizing: border-box;
+  }
+}

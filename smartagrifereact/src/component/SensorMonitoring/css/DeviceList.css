@@ -1,0 +1,84 @@
+.device-list-panel {
+  background: white;
+
+  border: 1px solid #e1e9e4;
+
+  border-radius: 18px;
+
+  overflow: hidden;
+}
+
+.device-list-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 20px;
+
+  border-bottom: 1px solid #edf1ee;
+}
+
+.device-list-header span {
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+
+  color: #15803d;
+}
+
+.device-list-header h3 {
+  margin: 4px 0 0;
+
+  font-size: 17px;
+}
+
+.device-list-header > strong {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: #f0fdf4;
+
+  color: #15803d;
+}
+
+.device-list {
+  padding: 10px;
+}
+
+.device-list-empty {
+  padding: 40px 20px;
+
+  text-align: center;
+
+  color: #87918a;
+
+  font-size: 13px;
+}
+
+.device-list-empty div {
+  font-size: 30px;
+
+  margin-bottom: 10px;
+}
+
+.device-list-empty strong,
+.device-list-empty span {
+  display: block;
+}
+
+.device-list-empty strong {
+  color: #344139;
+
+  margin-bottom: 4px;
+}

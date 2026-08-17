@@ -1,0 +1,50 @@
+.recommendation-page {
+  min-height: 100vh;
+  padding: 32px 36px 60px;
+  margin-left: 270px;
+  background: #f6f8f7;
+}
+
+.recommendation-alert {
+  margin: 24px 0;
+  padding: 16px 18px;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 14px;
+
+  color: #9a3412;
+}
+
+.recommendation-alert > span {
+  font-size: 22px;
+}
+
+.recommendation-alert strong {
+  display: block;
+}
+
+.recommendation-alert p {
+  margin: 4px 0 0;
+}
+
+.recommendation-alert button {
+  margin-left: auto;
+
+  border: 0;
+  background: transparent;
+
+  font-size: 20px;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .recommendation-page {
+    margin-left: 0;
+    padding: 24px 20px 40px;
+  }
+}

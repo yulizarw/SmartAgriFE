@@ -1,0 +1,66 @@
+.sensor-form {
+  background: #fafafa;
+}
+
+.sensor-form-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 24px;
+  background: white;
+  border-bottom: 1px solid #eef0f2;
+}
+
+.sensor-form-header h3 {
+  margin: 5px 0 0;
+  color: #172033;
+}
+
+.sensor-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding: 22px 24px;
+}
+
+.sensor-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.sensor-field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.sensor-field input,
+.sensor-field select {
+  padding: 11px 13px;
+  border: 1px solid #dfe3e8;
+  border-radius: 9px;
+  background: white;
+  outline: none;
+}
+
+.sensor-field input:focus,
+.sensor-field select:focus {
+  border-color: #22c55e;
+}
+
+.sensor-form-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 24px;
+  background: white;
+  border-top: 1px solid #eef0f2;
+}
+
+@media (max-width: 600px) {
+
+  .sensor-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+}

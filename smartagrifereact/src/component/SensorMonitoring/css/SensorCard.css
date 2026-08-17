@@ -1,0 +1,94 @@
+.sensor-card {
+  padding: 20px;
+
+  background: white;
+
+  border: 1px solid #e1e9e4;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 5px 18px rgba(20, 50, 30, 0.04);
+}
+
+.sensor-card-top {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+}
+
+.sensor-card-icon {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background: #f0fdf4;
+
+  font-size: 21px;
+}
+
+.sensor-live {
+  padding: 5px 8px;
+
+  border-radius: 7px;
+
+  background: #ecfdf5;
+
+  color: #15803d;
+
+  font-size: 8px;
+
+  font-weight: 800;
+}
+
+.sensor-card-label {
+  margin-top: 18px;
+
+  color: #657168;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+.sensor-card-value {
+  display: flex;
+
+  align-items: baseline;
+
+  gap: 5px;
+
+  margin-top: 4px;
+}
+
+.sensor-card-value strong {
+  font-size: 31px;
+
+  color: #18231c;
+}
+
+.sensor-card-value span {
+  font-size: 13px;
+
+  color: #738078;
+}
+
+.sensor-card-time {
+  margin-top: 14px;
+
+  padding-top: 12px;
+
+  border-top: 1px solid #eef2ef;
+
+  color: #9aa39d;
+
+  font-size: 10px;
+}

@@ -1,0 +1,221 @@
+.gee-analysis-panel {
+  background: #ffffff;
+
+  border: 1px solid #e5ebe6;
+  border-radius: 18px;
+
+  padding: 24px;
+
+  margin-bottom: 24px;
+
+  box-shadow: 0 8px 25px rgba(20, 40, 25, 0.04);
+}
+
+.gee-panel-header {
+  margin-bottom: 22px;
+}
+
+.gee-panel-header h2 {
+  margin: 0;
+
+  font-size: 20px;
+  color: #17231a;
+}
+
+.gee-panel-header p {
+  margin: 5px 0 0;
+
+  color: #737d76;
+  font-size: 13px;
+}
+
+.gee-analysis-filter {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  padding: 16px;
+
+  background: #f8faf8;
+  border-radius: 14px;
+
+  margin-bottom: 20px;
+}
+
+.gee-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.gee-input-group label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #4b554e;
+}
+
+.gee-input-group input {
+  height: 42px;
+
+  border: 1px solid #dce5de;
+  border-radius: 9px;
+
+  padding: 0 12px;
+
+  background: #ffffff;
+
+  outline: none;
+}
+
+.gee-input-group input:focus {
+  border-color: #22c55e;
+}
+
+.gee-analysis-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 16px;
+}
+
+.gee-analysis-card {
+  padding: 20px;
+
+  border: 1px solid #e8ede9;
+  border-radius: 15px;
+
+  background: #ffffff;
+}
+
+.gee-card-icon {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  font-size: 22px;
+
+  margin-bottom: 14px;
+}
+
+.gee-card-icon.ndvi {
+  background: #ecfdf5;
+}
+
+.gee-card-icon.satellite {
+  background: #eff6ff;
+}
+
+.gee-card-icon.weather {
+  background: #f0f9ff;
+}
+
+.gee-analysis-card > span {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #89938b;
+}
+
+.gee-analysis-card h3 {
+  margin: 5px 0;
+
+  font-size: 17px;
+
+  color: #17231a;
+}
+
+.gee-analysis-card p {
+  min-height: 42px;
+
+  margin: 0 0 15px;
+
+  color: #747d76;
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.gee-analysis-card button {
+  width: 100%;
+
+  border: none;
+  border-radius: 9px;
+
+  padding: 10px;
+
+  background: #15803d;
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.gee-analysis-card button:hover {
+  background: #166534;
+}
+
+.gee-analysis-card button:disabled {
+  opacity: 0.5;
+}
+
+.gee-card-actions {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 8px;
+}
+
+.gee-card-actions .secondary {
+  background: #ffffff;
+
+  color: #15803d;
+
+  border: 1px solid #bbf7d0;
+}
+
+.gee-result-box {
+  margin-top: 14px;
+
+  padding: 10px;
+
+  background: #f8faf8;
+
+  border-radius: 9px;
+
+  overflow: auto;
+}
+
+.gee-result-box strong {
+  font-size: 10px;
+
+  color: #15803d;
+}
+
+.gee-result-box pre {
+  margin: 7px 0 0;
+
+  font-size: 10px;
+
+  color: #47524a;
+
+  white-space: pre-wrap;
+}
+
+@media (max-width: 900px) {
+  .gee-analysis-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gee-analysis-filter {
+    grid-template-columns: 1fr;
+  }
+}

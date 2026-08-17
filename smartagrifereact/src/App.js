@@ -14,6 +14,13 @@ import { Home } from "./screen/Home";
 import { Register } from "./screen/Register";
 import {Farm} from "./screen/Farm"
 import {CropHealth} from "./screen/CropHealth"
+import { SensorMonitoring } from "./screen/SensorMonitoring";
+import { Gee } from "./screen/Gee";
+import { Recommendation } from "./screen/Recommendation";
+import { Irrigation } from "./screen/Irrigation";
+import { Devices } from "./screen/Devices";
+import { GIS } from "./screen/GIS";
+import { Crop } from "./screen/Crop";
 
 //router guard
 import ProtectedRoute from "./helper/ProtectedRoute";
@@ -70,6 +77,64 @@ function App() {
             element={
               <ProtectedRoute authLogin={authLogin}>
                 <CropHealth logOutFunction={logOutFunction} />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/sensors"
+            element={
+              <ProtectedRoute authLogin={authLogin}>
+                <SensorMonitoring logOutFunction={logOutFunction} />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/climate"
+            element={
+              <ProtectedRoute authLogin={authLogin}>
+                <Gee logOutFunction={logOutFunction} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/recommendations"
+            element={
+              <ProtectedRoute authLogin={authLogin}>
+                <Recommendation logOutFunction={logOutFunction} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/irrigation"
+            element={
+              <ProtectedRoute authLogin={authLogin}>
+                <Irrigation logOutFunction={logOutFunction} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/devices"
+            element={
+              <ProtectedRoute authLogin={authLogin}>
+                <Devices logOutFunction={logOutFunction} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/gis"
+            element={
+              <ProtectedRoute authLogin={authLogin}>
+                <GIS logOutFunction={logOutFunction} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/crop"
+            element={
+              <ProtectedRoute authLogin={authLogin}>
+                <Crop logOutFunction={logOutFunction} />
               </ProtectedRoute>
             }
           />

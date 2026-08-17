@@ -1,0 +1,85 @@
+.device-summary-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 18px;
+
+  margin-bottom: 24px;
+}
+
+.device-summary-card {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 20px;
+
+  background: white;
+
+  border: 1px solid #e3ebe6;
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 5px 18px rgba(20, 50, 30, 0.04);
+}
+
+.device-summary-icon {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background: #ecfdf5;
+
+  font-size: 21px;
+}
+
+.device-summary-icon.online {
+  color: #16a34a;
+
+  background: #f0fdf4;
+}
+
+.device-summary-icon.offline {
+  color: #dc2626;
+
+  background: #fef2f2;
+}
+
+.device-summary-card span {
+  display: block;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+
+  color: #849088;
+}
+
+.device-summary-card strong {
+  display: block;
+
+  margin-top: 5px;
+
+  font-size: 25px;
+
+  color: #17211b;
+}
+
+@media (max-width: 700px) {
+  .device-summary-grid {
+    grid-template-columns: 1fr;
+  }
+}

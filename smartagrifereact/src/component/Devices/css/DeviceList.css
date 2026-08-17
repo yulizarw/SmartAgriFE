@@ -1,0 +1,160 @@
+.device-list-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.device-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 24px;
+  border-bottom: 1px solid #eef0f2;
+}
+
+.device-list-header > div > span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #16a34a;
+}
+
+.device-list-header h2 {
+  margin: 5px 0 0;
+  font-size: 20px;
+  color: #172033;
+}
+
+.device-count {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.device-table-wrapper {
+  overflow-x: auto;
+}
+
+.device-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.device-table th {
+  padding: 13px 20px;
+  text-align: left;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #9ca3af;
+  background: #fafafa;
+}
+
+.device-table td {
+  padding: 16px 20px;
+  border-top: 1px solid #f0f1f3;
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.device-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.device-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: #ecfdf5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.device-name-cell strong {
+  display: block;
+  color: #172033;
+}
+
+.device-name-cell small {
+  display: block;
+  margin-top: 3px;
+  color: #9ca3af;
+}
+
+.connection-badge {
+  padding: 5px 9px;
+  border-radius: 7px;
+  background: #f3f4f6;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.device-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.device-status > span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #9ca3af;
+}
+
+.device-status.online {
+  color: #16a34a;
+}
+
+.device-status.online > span {
+  background: #22c55e;
+}
+
+.device-status.offline {
+  color: #9ca3af;
+}
+
+.device-manage-button {
+  border: none;
+  background: transparent;
+  color: #15803d;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.device-empty {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.device-empty-icon {
+  font-size: 40px;
+}
+
+.device-empty h3 {
+  margin: 12px 0 5px;
+}
+
+.device-empty p {
+  color: #9ca3af;
+}
+
+.device-empty button {
+  border: none;
+  border-radius: 9px;
+  padding: 10px 15px;
+  background: #15803d;
+  color: white;
+  cursor: pointer;
+}
+
+.device-loading {
+  padding: 50px;
+  text-align: center;
+  color: #9ca3af;
+}

@@ -1,0 +1,148 @@
+.relay-command-panel {
+  padding: 24px;
+
+  background: #111a15;
+
+  border-radius: 18px;
+
+  color: white;
+}
+
+.relay-command-header {
+  display: flex;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 20px;
+}
+
+.relay-command-header span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+
+  color: #86efac;
+}
+
+.relay-command-header h2 {
+  margin: 6px 0;
+
+  color: white;
+}
+
+.relay-command-header p {
+  margin: 0;
+
+  color: #aab8ae;
+}
+
+.relay-command-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background: #193324;
+
+  font-size: 22px;
+}
+
+.relay-command-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-bottom: 10px;
+
+  color: #bbf7d0;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.relay-command-status span {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+}
+
+.relay-command-status span.online {
+  background: #22c55e;
+}
+
+.relay-command-status span.offline {
+  background: #647067;
+}
+
+.relay-command-content pre {
+  max-height: 260px;
+  overflow: auto;
+
+  padding: 18px;
+
+  margin: 0 0 15px;
+
+  background: #080d0a;
+
+  border: 1px solid #27342b;
+  border-radius: 10px;
+
+  color: #bbf7d0;
+
+  font-size: 12px;
+}
+
+.relay-empty {
+  padding: 35px;
+
+  text-align: center;
+
+  background: #18221c;
+
+  border: 1px dashed #34443a;
+
+  border-radius: 12px;
+
+  margin-bottom: 15px;
+}
+
+.relay-empty span {
+  display: block;
+  font-size: 28px;
+}
+
+.relay-empty strong {
+  display: block;
+  margin-top: 8px;
+}
+
+.relay-empty p {
+  margin-bottom: 0;
+  color: #94a39a;
+}
+
+.relay-load-button {
+  width: 100%;
+
+  padding: 12px;
+
+  border: 0;
+  border-radius: 9px;
+
+  background: #22c55e;
+  color: #08220f;
+
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.relay-load-button:hover {
+  background: #4ade80;
+}

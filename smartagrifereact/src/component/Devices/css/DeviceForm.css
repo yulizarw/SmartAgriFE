@@ -1,0 +1,117 @@
+.device-form {
+  background: white;
+}
+
+.device-form-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px;
+  border-bottom: 1px solid #eef0f2;
+}
+
+.device-form-header span,
+.sensor-form-header span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #16a34a;
+}
+
+.device-form-header h2 {
+  margin: 5px 0 0;
+  color: #172033;
+}
+
+.device-form-header > button,
+.sensor-form-header > button {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 9px;
+  background: #f3f4f6;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.device-form-body {
+  padding: 24px;
+}
+
+.device-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.device-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.device-field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.device-field input,
+.device-field select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 13px;
+  border: 1px solid #dfe3e8;
+  border-radius: 9px;
+  outline: none;
+  font-size: 13px;
+}
+
+.device-field input:focus,
+.device-field select:focus {
+  border-color: #22c55e;
+}
+
+.device-api-info {
+  display: flex;
+  gap: 12px;
+  margin-top: 22px;
+  padding: 14px;
+  border-radius: 12px;
+  background: #f0fdf4;
+}
+
+.device-api-info p {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.device-form-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 18px 24px;
+  border-top: 1px solid #eef0f2;
+}
+
+.device-form-footer button,
+.sensor-form-footer button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+.device-form-footer .primary,
+.sensor-form-footer .primary {
+  background: #15803d;
+  color: white;
+}
+
+@media (max-width: 650px) {
+
+  .device-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+}

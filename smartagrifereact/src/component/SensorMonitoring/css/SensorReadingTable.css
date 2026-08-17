@@ -1,0 +1,108 @@
+.sensor-reading-panel {
+  background: white;
+
+  border: 1px solid #e1e9e4;
+
+  border-radius: 18px;
+
+  overflow: hidden;
+}
+
+.sensor-reading-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 20px;
+
+  border-bottom: 1px solid #edf1ee;
+}
+
+.sensor-reading-header span:first-child {
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+
+  color: #15803d;
+}
+
+.sensor-reading-header h3 {
+  margin: 4px 0 0;
+
+  font-size: 17px;
+}
+
+.sensor-reading-header > span:last-child {
+  font-size: 11px;
+
+  color: #7d887f;
+}
+
+.sensor-reading-table-wrapper {
+  overflow-x: auto;
+}
+
+.sensor-reading-table {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+.sensor-reading-table th,
+.sensor-reading-table td {
+  padding: 14px 18px;
+
+  text-align: left;
+
+  border-bottom: 1px solid #f0f3f1;
+
+  font-size: 12px;
+}
+
+.sensor-reading-table th {
+  background: #f8faf9;
+
+  color: #7b867e;
+
+  font-size: 10px;
+
+  letter-spacing: 0.06em;
+}
+
+.sensor-reading-table td {
+  color: #556159;
+}
+
+.sensor-reading-table td strong {
+  color: #263229;
+}
+
+.reading-success {
+  display: inline-block;
+
+  padding: 4px 7px;
+
+  border-radius: 6px;
+
+  background: #ecfdf5;
+
+  color: #15803d;
+
+  font-size: 9px;
+
+  font-weight: 800;
+}
+
+.sensor-reading-empty {
+  padding: 35px;
+
+  text-align: center;
+
+  color: #8a948d;
+
+  font-size: 13px;
+}

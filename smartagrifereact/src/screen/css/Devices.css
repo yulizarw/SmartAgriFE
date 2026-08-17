@@ -1,0 +1,194 @@
+/* =========================================================
+   DEVICES PAGE
+========================================================= */
+
+.devices-page {
+  min-height: 100vh;
+
+  margin-left: 260px;
+
+  padding: 32px 40px 50px;
+
+  box-sizing: border-box;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f8faf9 0%,
+      #f3f7f4 100%
+    );
+}
+
+
+/* =========================================================
+   ALERT
+========================================================= */
+
+.devices-alert {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 12px;
+
+  padding: 14px 16px;
+
+  margin-top: 22px;
+
+  border-radius: 14px;
+
+  background: #fff7ed;
+
+  border: 1px solid #fed7aa;
+
+  color: #9a3412;
+
+  box-sizing: border-box;
+}
+
+.devices-alert > div {
+  flex: 1;
+}
+
+.devices-alert strong {
+  display: block;
+}
+
+.devices-alert p {
+  margin: 4px 0 0;
+}
+
+.devices-alert button {
+  border: none;
+
+  background: transparent;
+
+  font-size: 20px;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   MODAL BACKDROP
+========================================================= */
+
+.device-modal-backdrop {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 1000;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 30px;
+
+  box-sizing: border-box;
+
+  background: rgba(15, 23, 42, 0.45);
+}
+
+
+/* =========================================================
+   DEVICE FORM MODAL
+========================================================= */
+
+.device-modal {
+  width: min(720px, 100%);
+
+  max-height: 90vh;
+
+  overflow-y: auto;
+
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.18);
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   DEVICE DETAIL MODAL
+========================================================= */
+
+.device-detail-modal {
+  width: min(900px, 100%);
+
+  max-height: 90vh;
+
+  overflow-y: auto;
+
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.18);
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .devices-page {
+    margin-left: 0;
+
+    padding: 24px;
+  }
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 800px) {
+
+  .devices-page {
+    padding: 22px 20px 40px;
+  }
+
+  .device-modal-backdrop {
+    padding: 20px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .devices-page {
+    padding: 20px 15px 35px;
+  }
+
+  .device-modal-backdrop {
+    padding: 12px;
+  }
+
+  .device-modal,
+  .device-detail-modal {
+    max-height: 94vh;
+
+    border-radius: 14px;
+  }
+
+}

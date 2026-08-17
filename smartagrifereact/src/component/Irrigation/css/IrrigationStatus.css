@@ -1,0 +1,118 @@
+.irrigation-status-section {
+  margin-top: 26px;
+}
+
+.irrigation-status-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 16px;
+}
+
+.irrigation-status-card {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  min-height: 105px;
+
+  padding: 18px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5ebe7;
+
+  border-radius: 18px;
+
+  box-sizing: border-box;
+}
+
+.irrigation-status-card.pump.on {
+  border-color: #bbf7d0;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #f0fdf4
+    );
+}
+
+.irrigation-card-icon {
+  width: 45px;
+
+  height: 45px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background: #f0fdf4;
+
+  font-size: 20px;
+
+  flex-shrink: 0;
+}
+
+.irrigation-status-card > div:last-child {
+  min-width: 0;
+}
+
+.irrigation-status-card span {
+  display: block;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  color: #829188;
+}
+
+.irrigation-status-card strong {
+  display: block;
+
+  margin-top: 5px;
+
+  font-size: 17px;
+
+  color: #1d2a22;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+.irrigation-status-card small {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #7a8980;
+
+  font-size: 11px;
+}
+
+@media (max-width: 1100px) {
+  .irrigation-status-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .irrigation-status-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,121 @@
+.device-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.device-page-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  color: #16a34a;
+  margin-bottom: 8px;
+}
+
+.device-page-header h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  color: #172033;
+}
+
+.device-page-header p {
+  margin: 8px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.device-add-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  border-radius: 12px;
+  padding: 13px 18px;
+  background: #15803d;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.device-add-button span {
+  font-size: 20px;
+}
+
+.device-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.device-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px;
+  border-radius: 16px;
+  background: white;
+  border: 1px solid #e5e7eb;
+}
+
+.device-stat-icon {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #ecfdf5;
+  font-size: 21px;
+}
+
+.device-stat-icon.online {
+  color: #16a34a;
+}
+
+.device-stat-icon.offline {
+  color: #9ca3af;
+}
+
+.device-stat-icon.sensor {
+  background: #eff6ff;
+}
+
+.device-stat-card span {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #9ca3af;
+}
+
+.device-stat-card strong {
+  display: block;
+  margin-top: 5px;
+  font-size: 24px;
+  color: #172033;
+}
+
+@media (max-width: 900px) {
+
+  .device-stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .device-page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .device-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
