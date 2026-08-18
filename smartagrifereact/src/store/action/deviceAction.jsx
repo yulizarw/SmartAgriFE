@@ -141,7 +141,7 @@ export const collectDevice = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios(`iot/reading/${id}`);
-      console.log(data)
+      // console.log(data)
       dispatch({
         type: "SUCCESS_GET_READINGS_PER_DEVICE",
         payload: data,

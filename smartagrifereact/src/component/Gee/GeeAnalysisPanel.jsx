@@ -4,6 +4,8 @@ import "./css/GeeAnalysisPanel.css";
 
 const GeeAnalysisPanel = ({
   farmId,
+  farms,
+  listCrop,
   date,
   setFarmId,
   setDate,
@@ -23,7 +25,7 @@ const GeeAnalysisPanel = ({
           <span className="gee-section-label">ANALYSIS WORKSPACE</span>
 
           <h2>Earth Observation Analysis</h2>
-
+         
           <p>
             Jalankan analisis berdasarkan lokasi farm dan periode pengamatan.
           </p>
@@ -31,7 +33,7 @@ const GeeAnalysisPanel = ({
       </div>
 
       <div className="gee-analysis-filter">
-        <div className="gee-input-group">
+        {/* <div className="gee-input-group">
           <label>Farm ID</label>
 
           <input
@@ -40,6 +42,19 @@ const GeeAnalysisPanel = ({
             onChange={(e) => setFarmId(e.target.value)}
             placeholder="Contoh: 1"
           />
+        </div> */}
+        <div className="gee-input-group">
+          <label>Farm</label>
+
+          <select value={farmId} onChange={(e) => setFarmId(e.target.value)}>
+            <option value="">-- Pilih Farm --</option>
+
+            {listCrop.map((crop) => (
+              <option key={crop.farmId} value={crop.farmId}>
+                {crop.Farm.name} - {crop?.cropName}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="gee-input-group">

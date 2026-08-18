@@ -148,24 +148,24 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, logOutFunction }) => {
             active={isActive("/climate")}
             onClick={() => handleNavigation("/climate")}
           />
-          <SidebarItem
+          {/* <SidebarItem
             icon="🌿"
             label="Crop Health"
             active={isActive("/crop-health")}
             onClick={() => handleNavigation("/crop-health")}
-          />
+          /> */}
         </SidebarSection>
 
         {/* SMART SYSTEM */}
 
         <SidebarSection title="SMART SYSTEM">
-          <SidebarItem
+          {/* <SidebarItem
             icon="💡"
             label="Recommendations"
             badge="2"
             active={isActive("/recommendations")}
             onClick={() => handleNavigation("/recommendations")}
-          />
+          /> */}
 
           <SidebarItem
             icon="💧"
@@ -177,13 +177,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, logOutFunction }) => {
 
         {/* ANALYTICS */}
 
-        <SidebarSection title="ANALYTICS">
-          <SidebarItem
+        {/* <SidebarSection title="ANALYTICS"> */}
+          {/* <SidebarItem
             icon="🗺️"
             label="GIS & Map"
             active={isActive("/gis")}
             onClick={() => handleNavigation("/gis")}
-          />
+          /> */}
 
           {/* <SidebarItem
               icon="📊"
@@ -191,7 +191,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, logOutFunction }) => {
               active={isActive("/history")}
               onClick={() => handleNavigation("/history")}
             /> */}
-        </SidebarSection>
+        {/* </SidebarSection> */}
       </nav>
 
       {/* =====================================================

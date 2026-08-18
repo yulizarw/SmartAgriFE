@@ -34,7 +34,10 @@ export const SensorMonitoring = ({
   // store
   const listDevices = useSelector((state) => state.deviceReducers.listDevices);
   const allReadings = useSelector((state) => state.deviceReducers.allReadings);
-  console.log(allReadings, "asd");
+  const readingsPerDevice = useSelector(
+    (state) => state.deviceReducers.readingsPerDevice,
+  );
+
   /*
   |--------------------------------------------------------------------------
   | GET DEVICES
@@ -54,44 +57,76 @@ export const SensorMonitoring = ({
     };
   }, [dispatch]);
 
+  // useEffect(() => {
+  //   if (!selectedDevice || !collectDevice) {
+  //     return;
+  //   }
+
+  //   let cancelled = false;
+
+  //   const fetchReadings = async () => {
+  //     try {
+  //       const result = await collectDevice(selectedDevice.id);
+
+  //       if (cancelled) {
+  //         return;
+  //       }
+
+  //       const realtime = result?.realtime || result?.data || {};
+
+  //       const readings = realtime?.readings || result?.database?.readings || [];
+
+  //       setSensorReadings(Array.isArray(readings) ? readings : []);
+  //     } catch (err) {
+  //       if (!cancelled) {
+  //         console.error("Gagal mengambil sensor readings:", err);
+  //       }
+  //     }
+  //   };
+
+  //   // langsung ambil ketika device dipilih
+  //   fetchReadings();
+
+  //   // refresh setiap 2.5 detik
+  //   const interval = setInterval(fetchReadings, 2500);
+
+  //   return () => {
+  //     cancelled = true;
+  //     clearInterval(interval);
+  //   };
+  // }, [selectedDevice?.id, collectDevice]);
   useEffect(() => {
-    if (!selectedDevice || !collectDevice) {
+    if (!selectedDevice) {
       return;
     }
 
     let cancelled = false;
+    let timeoutId;
 
     const fetchReadings = async () => {
       try {
-        const result = await collectDevice(selectedDevice.id);
-
-        if (cancelled) {
-          return;
-        }
-
-        const realtime = result?.realtime || result?.data || {};
-
-        const readings = realtime?.readings || result?.database?.readings || [];
-
-        setSensorReadings(Array.isArray(readings) ? readings : []);
+        await dispatch(collectDevice(selectedDevice.id));
       } catch (err) {
         if (!cancelled) {
-          console.error("Gagal mengambil sensor readings:", err);
+          console.error(err);
+        }
+      } finally {
+        if (!cancelled) {
+          timeoutId = setTimeout(fetchReadings, 2500);
         }
       }
     };
 
-    // langsung ambil ketika device dipilih
     fetchReadings();
-
-    // refresh setiap 2.5 detik
-    const interval = setInterval(fetchReadings, 2500);
 
     return () => {
       cancelled = true;
-      clearInterval(interval);
+
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
     };
-  }, [selectedDevice?.id, collectDevice]);
+  }, [dispatch, selectedDevice?.id]);
 
   const loadDevices = async () => {
     try {
@@ -364,8 +399,8 @@ export const SensorMonitoring = ({
           />
 
           <div className="sensor-monitoring-main">
-            <SensorGrid device={selectedDevice} readings={allReadings} />
-
+            {/* <SensorGrid device={selectedDevice} readings={allReadings} /> */}
+            <SensorGrid device={selectedDevice} readings={readingsPerDevice} />
             <SensorReadingTable readings={allReadings} />
           </div>
         </div>

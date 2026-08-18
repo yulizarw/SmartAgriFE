@@ -4,9 +4,9 @@ import SensorCard from "./SensorCard";
 
 import "./css/SensorGrid.css";
 
-const SensorGrid = ({ device, readings = [] }) => {
+const SensorGrid = ({ device, readings }) => {
   const [currentPage, setCurrentPage] = useState(1);
-
+  console.log(readings,'di grid')
   const readingsPerPage = 5;
 
   /*

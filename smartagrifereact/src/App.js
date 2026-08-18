@@ -30,7 +30,8 @@ import LoginProtectedRoute from "./helper/LoginProtectedRoute";
 import { Provider, useSelector } from "react-redux";
 import store from "./store/index";
 
-import { createDevice, createSensor,listAllSensor,listDevice, getAllReading } from "../src/store/action/deviceAction";
+import { createDevice, createSensor,listAllSensor,listDevice, getAllReading, collectDevice } from "../src/store/action/deviceAction";
+import { testGeeConnection, analyzeEarthObservation } from "./store/action/geeAction";
 
 function App() {
   // const [authLogin, setAuthLogin] = useState(false);
@@ -87,7 +88,7 @@ function App() {
             path="/sensors"
             element={
               <ProtectedRoute authLogin={authLogin}>
-                <SensorMonitoring logOutFunction={logOutFunction} listDevice={listDevice} getAllReading={getAllReading} />
+                <SensorMonitoring logOutFunction={logOutFunction} listDevice={listDevice} getAllReading={getAllReading} collectDevice={collectDevice} />
               </ProtectedRoute>
             }
           />
@@ -96,7 +97,7 @@ function App() {
             path="/climate"
             element={
               <ProtectedRoute authLogin={authLogin}>
-                <Gee logOutFunction={logOutFunction} />
+                <Gee logOutFunction={logOutFunction} testGeeConnection={testGeeConnection} analyzeEarthObservation={analyzeEarthObservation} />
               </ProtectedRoute>
             }
           />

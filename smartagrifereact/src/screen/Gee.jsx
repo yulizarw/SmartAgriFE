@@ -1,263 +1,164 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import Sidebar from "../../src/component/Sidebar/SideBar";
+import Sidebar from "../component/Sidebar/SideBar";
+import GeeHeader from "../component/Gee/GeeHeader";
+import GeeFarmCard from "../component/Gee/GeeFarmCard";
+import GeeFarmMap from "../component/Gee/GeeFarmMap";
+import Loading from "../component/Loading/Loading";
 
-import GeeHeader from "../../src/component/Gee/GeeHeader";
-import GeeConnectionCard from "../../src/component/Gee/GeeConnectionCard";
-import GeeAnalysisPanel from "../../src/component/Gee/GeeAnalysisPanel";
-import GeeHistoryPanel from "../../src/component/Gee/GeeHistoryPanel";
+import { getGeeHistories } from "../store/action/geeAction";
+import { getWeatherForecasts } from "../store/action/weatherAction";
+import { cropLists } from "../store/action/cropAction";
+import { fetchFarms } from "../store/action/farmAction";
 
 import "./css/Gee.css";
 
-export const Gee = ({
-  testGeeConnection,
-  getNDVI,
-  analyzeSatellite,
-  analyzeWeather,
-  saveWeather,
-  saveGeeHistory,
-  logOutFunction,
-}) => {
+export const Gee = ({ logOutFunction }) => {
+  const dispatch = useDispatch();
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const [connectionStatus, setConnectionStatus] = useState(null);
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 4;
 
-  const [ndviData, setNdviData] = useState(null);
-  const [satelliteData, setSatelliteData] = useState(null);
-  const [weatherData, setWeatherData] = useState(null);
+  // =========================================
+  // REDUX
+  // =========================================
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const farms = useSelector((state) => state.farmReducers.farms);
+  const listCrop = useSelector((state) => state.cropReducers.listCrop);
+  const userLogin = useSelector((state) => state.userReducers.userLogin);
+  const geeHistories = useSelector((state) => state.geeReducers.geeHistories);
 
-  const [selectedFarmId, setSelectedFarmId] = useState("");
-  const [selectedDate, setSelectedDate] = useState(
-    new Date().toISOString().split("T")[0],
+  const weatherForecasts = useSelector(
+    (state) => state.weatherReducers.weatherForecasts,
   );
 
-  /*
-  |--------------------------------------------------------------------------
-  | TEST CONNECTION
-  |--------------------------------------------------------------------------
-  */
+  const geeLoading = useSelector((state) => state.geeReducers?.loading);
+  const weatherLoading = useSelector((state) => state.weatherReducers?.loading);
 
-  const handleTestConnection = async () => {
-    if (!testGeeConnection) {
-      setConnectionStatus({
-        success: true,
-        message: "GEE connection handler belum dihubungkan.",
-      });
+  // =========================================
+  // FETCH DATA
+  // =========================================
 
-      return;
+  useEffect(() => {
+    if (userLogin?.access_token) {
+      dispatch(getGeeHistories());
+      dispatch(getWeatherForecasts());
+      dispatch(fetchFarms(userLogin.access_token));
+      dispatch(cropLists(userLogin.access_token));
+    }
+  }, [userLogin?.access_token, dispatch]);
+
+  // =========================================
+  // FARM YANG MEMILIKI CROP
+  // =========================================
+
+  const farmsWithCrop = useMemo(() => {
+    if (!farms || !listCrop) {
+      return [];
     }
 
-    try {
-      setLoading(true);
-      setError("");
+    return farms
+      .map((farm) => {
+        const crop = listCrop.find(
+          (item) => Number(item.farmId) === Number(farm.id),
+        );
 
-      const result = await testGeeConnection();
+        if (!crop) {
+          return null;
+        }
 
-      setConnectionStatus(result);
-    } catch (err) {
-      console.error(err);
+        return {
+          ...farm,
+          crop,
+        };
+      })
+      .filter(Boolean);
+  }, [farms, listCrop]);
 
-      setConnectionStatus({
-        success: false,
-        message: err?.message || "Google Earth Engine gagal terhubung.",
-      });
+  // =========================================
+  // PAGINATION
+  // =========================================
 
-      setError(err?.message || "Gagal melakukan koneksi ke GEE.");
-    } finally {
-      setLoading(false);
+  const totalPages = Math.ceil(farmsWithCrop.length / itemsPerPage);
+
+  const paginatedFarms = useMemo(() => {
+    const start = (page - 1) * itemsPerPage;
+
+    return farmsWithCrop.slice(start, start + itemsPerPage);
+  }, [farmsWithCrop, page]);
+
+  useEffect(() => {
+    if (page > totalPages && totalPages > 0) {
+      setPage(totalPages);
     }
+  }, [page, totalPages]);
+
+  // =========================================
+  // GET GEE DATA FARM
+  // =========================================
+
+  // const getFarmGeeHistory = (farmId, cropId) => {
+  //   return geeHistories.find(
+  //     (item) =>
+  //       Number(item.farmId) === Number(farmId) &&
+  //       Number(item.cropId) === Number(cropId),
+  //   );
+  // };
+
+  const getFarmGeeHistory = (farmId, cropId) => {
+    if (!Array.isArray(geeHistories)) {
+      return null;
+    }
+
+    const farmData = geeHistories.find(
+      (item) =>
+        Number(item.farm?.id) === Number(farmId) &&
+        Number(item.crop?.id) === Number(cropId),
+    );
+
+    if (!farmData || !Array.isArray(farmData.histories)) {
+      return null;
+    }
+
+    // Ambil history terbaru
+    return (
+      farmData.histories
+        .slice()
+        .sort((a, b) => new Date(b.date) - new Date(a.date))[0] || null
+    );
   };
 
-  /*
-  |--------------------------------------------------------------------------
-  | NDVI
-  |--------------------------------------------------------------------------
-  */
+  // =========================================
+  // GET WEATHER DATA FARM
+  // =========================================
 
-  const handleGetNDVI = async () => {
-    if (!selectedFarmId) {
-      setError("Silakan pilih farm terlebih dahulu.");
-      return;
-    }
-
-    try {
-      setLoading(true);
-      setError("");
-
-      if (!getNDVI) {
-        setNdviData({
-          demo: true,
-          message: "getNDVI belum dihubungkan ke backend.",
-        });
-
-        return;
-      }
-
-      const result = await getNDVI({
-        farmId: selectedFarmId,
-        startDate: selectedDate,
-        endDate: selectedDate,
-      });
-
-      setNdviData(result);
-    } catch (err) {
-      console.error(err);
-      setError(err?.message || "Gagal mengambil NDVI.");
-    } finally {
-      setLoading(false);
-    }
+  const getFarmWeather = (farmId) => {
+    return weatherForecasts.find(
+      (item) => Number(item.farmId) === Number(farmId),
+    );
   };
 
-  /*
-  |--------------------------------------------------------------------------
-  | SATELLITE
-  |--------------------------------------------------------------------------
-  */
+  // console.log("Farm yang sedang ditampilkan:", farm.id, farm.crop?.id);
+  console.log("geeHistories:", geeHistories);
 
-  const handleAnalyzeSatellite = async () => {
-    if (!selectedFarmId || !selectedDate) {
-      setError("Farm dan tanggal wajib dipilih.");
-      return;
-    }
-
-    try {
-      setLoading(true);
-      setError("");
-
-      if (!analyzeSatellite) {
-        setSatelliteData({
-          demo: true,
-          message: "analyzeSatellite belum dihubungkan.",
-        });
-
-        return;
-      }
-
-      const result = await analyzeSatellite({
-        farmId: selectedFarmId,
-        date: selectedDate,
-      });
-
-      setSatelliteData(result);
-    } catch (err) {
-      console.error(err);
-      setError(err?.message || "Gagal menganalisis data satellite.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  /*
-  |--------------------------------------------------------------------------
-  | WEATHER
-  |--------------------------------------------------------------------------
-  */
-
-  const handleAnalyzeWeather = async () => {
-    if (!selectedFarmId || !selectedDate) {
-      setError("Farm dan tanggal wajib dipilih.");
-      return;
-    }
-
-    try {
-      setLoading(true);
-      setError("");
-
-      if (!analyzeWeather) {
-        setWeatherData({
-          demo: true,
-          message: "analyzeWeather belum dihubungkan.",
-        });
-
-        return;
-      }
-
-      const result = await analyzeWeather({
-        farmId: selectedFarmId,
-        date: selectedDate,
-      });
-
-      setWeatherData(result);
-    } catch (err) {
-      console.error(err);
-      setError(err?.message || "Gagal mengambil data weather.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  /*
-  |--------------------------------------------------------------------------
-  | SAVE WEATHER
-  |--------------------------------------------------------------------------
-  */
-
-  const handleSaveWeather = async () => {
-    if (!selectedFarmId || !selectedDate) {
-      setError("Farm dan tanggal wajib dipilih.");
-      return;
-    }
-
-    try {
-      setLoading(true);
-      setError("");
-
-      if (!saveWeather) {
-        setError("saveWeather belum dihubungkan.");
-        return;
-      }
-
-      await saveWeather({
-        farmId: selectedFarmId,
-        date: selectedDate,
-      });
-    } catch (err) {
-      console.error(err);
-      setError(err?.message || "Gagal menyimpan weather.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  /*
-  |--------------------------------------------------------------------------
-  | SAVE GEE HISTORY
-  |--------------------------------------------------------------------------
-  */
-
-  const handleSaveGeeHistory = async () => {
-    if (!selectedFarmId || !selectedDate) {
-      setError("Farm dan tanggal wajib dipilih.");
-      return;
-    }
-
-    try {
-      setLoading(true);
-      setError("");
-
-      if (!saveGeeHistory) {
-        setError("saveGeeHistory belum dihubungkan.");
-        return;
-      }
-
-      await saveGeeHistory({
-        farmId: selectedFarmId,
-        date: selectedDate,
-        cropId: null,
-      });
-    } catch (err) {
-      console.error(err);
-      setError(err?.message || "Gagal menyimpan GEE history.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  console.table(
+    Array.isArray(geeHistories)
+      ? geeHistories.map((item) => ({
+          id: item.id,
+          farmId: item.farmId,
+          cropId: item.cropId,
+          date: item.date,
+          ndvi: item.ndvi,
+        }))
+      : [],
+  );
 
   return (
     <>
+      <Loading />
       <Sidebar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
@@ -267,46 +168,187 @@ export const Gee = ({
       <main className="gee-page">
         <GeeHeader />
 
-        {error && (
-          <div className="gee-alert">
-            <span>⚠</span>
+        {/* =====================================
+            HEADER
+        ====================================== */}
 
+        <section className="gee-dashboard-header">
+          <div>
+            <span className="gee-section-label">SMART AGRICULTURE GIS</span>
+
+            <h1>Farm Earth Observation</h1>
+
+            <p>
+              Monitoring kondisi lahan berdasarkan satellite imagery dan data
+              cuaca.
+            </p>
+          </div>
+
+          <div className="gee-update-status">
+            <span className="gee-status-dot" />
+            Data diperbarui otomatis oleh scheduler
+          </div>
+        </section>
+
+        {/* =====================================
+            MAP
+        ====================================== */}
+
+        <section className="gee-map-section">
+          <div className="gee-map-header">
             <div>
-              <strong>Terjadi kesalahan</strong>
-              <p>{error}</p>
+              <span className="gee-section-label">
+                GEOGRAPHIC INFORMATION SYSTEM
+              </span>
+
+              <h2>Farm Monitoring Map</h2>
             </div>
 
-            <button type="button" onClick={() => setError("")}>
-              ×
-            </button>
+            <div className="gee-map-counter">{farmsWithCrop.length} Farm</div>
           </div>
-        )}
 
-        <GeeConnectionCard
-          connectionStatus={connectionStatus}
-          loading={loading}
-          onTestConnection={handleTestConnection}
-        />
+          <GeeFarmMap
+            // farms={paginatedFarms}
+            farms={paginatedFarms}
+            getFarmGeeHistory={getFarmGeeHistory}
+            getFarmWeather={getFarmWeather}
+          />
+        </section>
 
-        <GeeAnalysisPanel
-          farmId={selectedFarmId}
-          date={selectedDate}
-          setFarmId={setSelectedFarmId}
-          setDate={setSelectedDate}
-          loading={loading}
-          onGetNDVI={handleGetNDVI}
-          onAnalyzeSatellite={handleAnalyzeSatellite}
-          onAnalyzeWeather={handleAnalyzeWeather}
-          ndviData={ndviData}
-          satelliteData={satelliteData}
-          weatherData={weatherData}
-          onSaveWeather={handleSaveWeather}
-        />
+        {/* =====================================
+            FARM CARDS
+        ====================================== */}
 
-        <GeeHistoryPanel loading={loading} onSave={handleSaveGeeHistory} />
+        <section className="gee-farm-section">
+          <div className="gee-farm-section-header">
+            <div>
+              <span className="gee-section-label">FARM OBSERVATION</span>
+
+              <h2>Farm & Crop Monitoring</h2>
+            </div>
+
+            <span>
+              Page {page} / {Math.max(totalPages, 1)}
+            </span>
+          </div>
+          {}
+
+          {/* {paginatedFarms.map((farm) => {
+            const farmId = farm.id;
+            const cropId = farm.crop?.id;
+
+            const gee = getFarmGeeHistory(farmId, cropId);
+            const weather = getFarmWeather(farmId);
+
+            console.log("FARM:", farm.name);
+            console.log("FARM ID:", farmId);
+            console.log("CROP ID:", cropId);
+            console.log("GEE:", gee);
+            console.log("WEATHER:", weather);
+
+            return (
+              <GeeFarmCard
+                key={farm.id}
+                farm={farm}
+                crop={farm.crop}
+                gee={gee}
+                weather={weather}
+              />
+            );
+          })} */}
+          <div className="gee-farm-grid">
+            {paginatedFarms.map((farm) => {
+              const gee = getFarmGeeHistory(farm.id, farm.crop?.id);
+
+              const weather = getFarmWeather(farm.id);
+
+              return (
+                <GeeFarmCard
+                  key={farm.id}
+                  farm={farm}
+                  crop={farm.crop}
+                  gee={gee}
+                  weather={weather}
+                />
+              );
+            })}
+          </div>
+
+          {/* =====================================
+              PAGINATION
+          ====================================== */}
+
+          {/* {totalPages > 1 && (
+            <div className="gee-pagination">
+              <button
+                type="button"
+                disabled={page === 1}
+                onClick={() => setPage((prev) => prev - 1)}
+              >
+                ← Previous
+              </button>
+
+              {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+                (number) => (
+                  <button
+                    key={number}
+                    type="button"
+                    className={page === number ? "active" : ""}
+                    onClick={() => setPage(number)}
+                  >
+                    {number}
+                  </button>
+                ),
+              )}
+
+              <button
+                type="button"
+                disabled={page === totalPages}
+                onClick={() => setPage((prev) => prev + 1)}
+              >
+                Next →
+              </button>
+            </div>
+          )} */}
+
+          {totalPages > 1 && (
+            <div className="gee-pagination">
+              <button
+                type="button"
+                className="gee-pagination-arrow"
+                disabled={page === 1}
+                onClick={() => setPage((prev) => prev - 1)}
+              >
+                ←
+              </button>
+
+              {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+                (number) => (
+                  <button
+                    key={number}
+                    type="button"
+                    className={`gee-pagination-number ${
+                      page === number ? "active" : ""
+                    }`}
+                    onClick={() => setPage(number)}
+                  >
+                    {number}
+                  </button>
+                ),
+              )}
+
+              <button
+                type="button"
+                className="gee-pagination-arrow"
+                disabled={page === totalPages}
+                onClick={() => setPage((prev) => prev + 1)}
+              >
+                →
+              </button>
+            </div>
+          )}
+        </section>
       </main>
     </>
   );
 };
-
-

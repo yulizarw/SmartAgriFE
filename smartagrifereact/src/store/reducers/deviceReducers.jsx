@@ -1,10 +1,11 @@
-import { listAllSensor } from "../action/deviceAction";
+// import { listAllSensor } from "../action/deviceAction";
 
 const initialState = {
   listDevices: [],
   sensorDevices: [],
   listAllSensors: [],
-  allReadings :[]
+  allReadings :[],
+  readingsPerDevice:[]
 };
 
 export const deviceReducers = (state = initialState, action) => {
@@ -28,6 +29,11 @@ export const deviceReducers = (state = initialState, action) => {
       return{
         ...state,
         allReadings:action.payload
+      }
+    case "SUCCESS_GET_READINGS_PER_DEVICE":
+      return {
+        ...state,
+        readingsPerDevice:action.payload
       }
     default:
       return state;

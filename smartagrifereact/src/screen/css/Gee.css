@@ -67,3 +67,798 @@
     flex-direction: column;
   }
 }
+
+
+/* =========================================================
+   GEE PAGE
+========================================================= */
+
+.gee-page {
+  min-height: 100vh;
+  padding: 28px 32px 50px;
+  margin-left: 250px;
+
+  background: #f6f8fb;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   DASHBOARD HEADER
+========================================================= */
+
+.gee-dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+
+  margin-bottom: 28px;
+}
+
+.gee-dashboard-header h1 {
+  margin: 8px 0 8px;
+
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+
+  color: #1f2937;
+}
+
+.gee-dashboard-header p {
+  margin: 0;
+
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.gee-section-label {
+  display: inline-block;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+
+  color: #6b7280;
+}
+
+
+/* =========================================================
+   UPDATE STATUS
+========================================================= */
+
+.gee-update-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 9px 14px;
+
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+
+  color: #6b7280;
+  font-size: 12px;
+
+  white-space: nowrap;
+}
+
+.gee-status-dot {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #22c55e;
+
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.12);
+}
+
+
+/* =========================================================
+   MAP SECTION
+========================================================= */
+
+.gee-map-section {
+  margin-bottom: 32px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.gee-map-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 22px 24px;
+
+  border-bottom: 1px solid #eef0f3;
+}
+
+.gee-map-header h2 {
+  margin: 7px 0 0;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  color: #1f2937;
+}
+
+.gee-map-counter {
+  padding: 7px 13px;
+
+  border-radius: 8px;
+
+  background: #f3f4f6;
+
+  color: #4b5563;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   LEAFLET MAP
+========================================================= */
+
+.gee-map-container {
+  width: 100%;
+  height: 480px;
+}
+
+.gee-leaflet-map {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+
+/* =========================================================
+   MAP POPUP
+========================================================= */
+
+.gee-map-popup {
+  min-width: 190px;
+
+  font-family: inherit;
+}
+
+.gee-map-popup strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 14px;
+  color: #111827;
+}
+
+.gee-map-popup > span {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.gee-map-popup hr {
+  margin: 8px 0;
+
+  border: 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+.gee-map-popup div {
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 6px;
+
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.gee-map-popup div strong {
+  display: inline;
+
+  margin: 0;
+
+  color: #111827;
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   FARM SECTION
+========================================================= */
+
+.gee-farm-section {
+  margin-top: 30px;
+}
+
+.gee-farm-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  margin-bottom: 18px;
+}
+
+.gee-farm-section-header h2 {
+  margin: 7px 0 0;
+
+  font-size: 21px;
+  font-weight: 700;
+
+  color: #1f2937;
+}
+
+.gee-farm-section-header > span {
+  color: #6b7280;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   FARM GRID
+========================================================= */
+
+.gee-farm-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 20px;
+}
+
+
+/* =========================================================
+   FARM CARD
+========================================================= */
+
+.gee-farm-card {
+  padding: 22px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.035);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.gee-farm-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+}
+
+
+/* =========================================================
+   FARM CARD HEADER
+========================================================= */
+
+.gee-farm-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  padding-bottom: 16px;
+
+  border-bottom: 1px solid #eef0f3;
+}
+
+.gee-card-label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+
+  color: #9ca3af;
+}
+
+.gee-farm-card-header h3 {
+  margin: 0 0 6px;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  color: #1f2937;
+}
+
+.gee-crop-name {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.gee-farm-id {
+  padding: 5px 9px;
+
+  border-radius: 7px;
+
+  background: #f3f4f6;
+
+  color: #6b7280;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   OBSERVATION INFO
+========================================================= */
+
+.gee-observation-info {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 12px;
+
+  margin-top: 16px;
+}
+
+.gee-observation-info > div {
+  padding: 11px 12px;
+
+  background: #f8fafc;
+
+  border-radius: 9px;
+}
+
+.gee-observation-info span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 10px;
+  color: #9ca3af;
+}
+
+.gee-observation-info strong {
+  display: block;
+
+  font-size: 12px;
+
+  color: #374151;
+}
+
+
+/* =========================================================
+   NDVI MAIN
+========================================================= */
+
+.gee-ndvi {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  margin-top: 16px;
+  padding: 16px;
+
+  border-radius: 12px;
+
+  background: #f0fdf4;
+
+  border: 1px solid #dcfce7;
+}
+
+.gee-ndvi-main {
+  min-width: 100px;
+
+  padding-right: 16px;
+
+  border-right: 1px solid #d1fae5;
+}
+
+.gee-ndvi-main span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+
+  color: #6b7280;
+}
+
+.gee-ndvi-main strong {
+  font-size: 29px;
+  font-weight: 700;
+
+  color: #166534;
+}
+
+.gee-ndvi-description {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.gee-ndvi-description span {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.gee-ndvi-description small {
+  font-size: 12px;
+  font-weight: 600;
+
+  color: #15803d;
+}
+
+
+/* =========================================================
+   INDEX GRID
+========================================================= */
+
+.gee-index-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 8px;
+
+  margin-top: 14px;
+}
+
+.gee-metric {
+  padding: 11px;
+
+  background: #f8fafc;
+
+  border: 1px solid #eef0f3;
+  border-radius: 9px;
+}
+
+.gee-metric span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 10px;
+
+  color: #9ca3af;
+}
+
+.gee-metric strong {
+  display: block;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  color: #374151;
+}
+
+
+/* =========================================================
+   WEATHER
+========================================================= */
+
+.gee-weather-section {
+  margin-top: 16px;
+
+  padding-top: 16px;
+
+  border-top: 1px solid #eef0f3;
+}
+
+.gee-weather-title {
+  margin-bottom: 10px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  color: #4b5563;
+}
+
+.gee-weather-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 8px;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.gee-empty {
+  padding: 50px 20px;
+
+  text-align: center;
+
+  background: #ffffff;
+
+  border: 1px dashed #d1d5db;
+  border-radius: 14px;
+
+  color: #9ca3af;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+.gee-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+
+  margin-top: 24px;
+}
+
+.gee-pagination button {
+  min-width: 36px;
+  height: 36px;
+
+  padding: 0 12px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #4b5563;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.gee-pagination button:hover:not(:disabled) {
+  background: #f3f4f6;
+
+  border-color: #d1d5db;
+}
+
+.gee-pagination button.active {
+  background: #111827;
+
+  border-color: #111827;
+
+  color: #ffffff;
+}
+
+.gee-pagination button:disabled {
+  opacity: 0.4;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1200px) {
+
+  .gee-page {
+    padding: 24px;
+  }
+
+  .gee-farm-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+@media (max-width: 768px) {
+
+  .gee-page {
+    margin-left: 0;
+
+    padding: 18px;
+  }
+
+  .gee-dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .gee-dashboard-header h1 {
+    font-size: 24px;
+  }
+
+  .gee-map-header {
+    padding: 18px;
+  }
+
+  .gee-map-container {
+    height: 380px;
+  }
+
+  .gee-index-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gee-weather-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .gee-page {
+    padding: 14px;
+  }
+
+  .gee-dashboard-header h1 {
+    font-size: 21px;
+  }
+
+  .gee-map-container {
+    height: 320px;
+  }
+
+  .gee-farm-card {
+    padding: 16px;
+  }
+
+  .gee-observation-info {
+    grid-template-columns: 1fr;
+  }
+
+  .gee-ndvi {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .gee-ndvi-main {
+    border-right: 0;
+    border-bottom: 1px solid #d1fae5;
+
+    padding-right: 0;
+    padding-bottom: 10px;
+
+    width: 100%;
+  }
+
+  .gee-index-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gee-weather-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gee-pagination {
+    flex-wrap: wrap;
+  }
+
+}
+
+
+
+/*  */
+/* =========================================
+   FARM CARD GRID
+========================================= */
+
+.gee-farm-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* =========================================
+   FARM CARD
+========================================= */
+
+.gee-farm-grid > * {
+  min-width: 0;
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1200px) {
+  .gee-farm-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* =========================================
+   SMALL TABLET
+========================================= */
+
+@media (max-width: 900px) {
+  .gee-farm-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+  .gee-farm-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================
+   PAGINATION
+========================================= */
+
+.gee-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 28px;
+  padding: 10px 0;
+}
+
+.gee-pagination button {
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #475569;
+  min-width: 38px;
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.gee-pagination button:hover:not(:disabled) {
+  border-color: #94a3b8;
+  background: #f8fafc;
+}
+
+.gee-pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.gee-pagination-number.active {
+  background: #0f766e;
+  border-color: #0f766e;
+  color: #ffffff;
+}
+
+.gee-pagination-arrow {
+  font-size: 18px !important;
+}

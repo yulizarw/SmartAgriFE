@@ -22,14 +22,14 @@ const SensorMonitoringHeader = ({ selectedDevice, collecting, onCollect }) => {
           </div>
         )}
 
-        <button
+        {/* <button
           type="button"
           className="sensor-refresh-button"
           disabled={!selectedDevice || collecting}
           onClick={onCollect}
         >
           {collecting ? "⌛ Collecting..." : "↻ Collect Data"}
-        </button>
+        </button> */}
       </div>
     </div>
   );
