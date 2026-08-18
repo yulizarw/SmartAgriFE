@@ -72,9 +72,14 @@ export const logOut = () => {
     dispatch({ type: "USER_LOGOUT" });
   };
 };
+export const registerUser = (payload) => {
+  return async () => {
+    try {
+      const response = await axios.post("/user/register", payload);
 
-// export const registerUser = (payload) => {
-//     return (dispatch) => {
-
-//     }
-// }
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+};

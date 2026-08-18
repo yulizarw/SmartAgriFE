@@ -1647,3 +1647,249 @@
 
   color: #15803d;
 }
+
+/* ============================================================
+   SENSOR STATUS
+============================================================ */
+
+.irrigation-sensor-online {
+  color: #15803d;
+}
+
+.irrigation-sensor-offline {
+  color: #dc2626;
+}
+
+/* ============================================================
+   CONFIDENCE
+============================================================ */
+
+.irrigation-confidence {
+  font-weight: 800;
+}
+
+.irrigation-confidence.confidence-high {
+  color: #15803d;
+}
+
+.irrigation-confidence.confidence-medium {
+  color: #b45309;
+}
+
+.irrigation-confidence.confidence-low {
+  color: #dc2626;
+}
+
+/* ============================================================
+   SAFETY
+============================================================ */
+
+.irrigation-safety-normal {
+  color: #15803d;
+}
+
+.irrigation-safety-active {
+  color: #b45309;
+}
+
+/* ============================================================
+   DECISION REASON CARD
+============================================================ */
+
+.irrigation-decision-reason-card {
+  margin-bottom: 24px;
+
+  padding: 24px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 4px 18px
+    rgba(
+      15,
+      23,
+      42,
+      0.04
+    );
+}
+
+.irrigation-decision-reason-header {
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-bottom: 18px;
+}
+
+.irrigation-decision-reason-header h3 {
+  margin: 0;
+
+  font-size: 18px;
+
+  font-weight: 800;
+
+  color: #0f172a;
+}
+
+/* ============================================================
+   ENGINE STATUS BADGE
+============================================================ */
+
+.decision-engine-status {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-height: 28px;
+
+  padding: 0 12px;
+
+  border-radius: 999px;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  white-space: nowrap;
+}
+
+.decision-engine-status.normal {
+  background: #dcfce7;
+
+  color: #15803d;
+}
+
+.decision-engine-status.safety {
+  background: #fef3c7;
+
+  color: #b45309;
+}
+
+/* ============================================================
+   DECISION REASON TEXT
+============================================================ */
+
+.irrigation-decision-reason-text {
+  margin: 0;
+
+  padding: 16px;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 12px;
+
+  background: #f8fafc;
+
+  color: #475569;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+/* ============================================================
+   DECISION META
+============================================================ */
+
+.decision-engine-meta {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      4,
+      minmax(
+        0,
+        1fr
+      )
+    );
+
+  gap: 12px;
+
+  margin-top: 16px;
+}
+
+.decision-engine-meta > div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+
+  padding: 12px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
+}
+
+.decision-engine-meta span {
+  font-size: 10px;
+
+  font-weight: 700;
+
+  color: #94a3b8;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.06em;
+}
+
+.decision-engine-meta strong {
+  font-size: 12px;
+
+  font-weight: 800;
+
+  color: #334155;
+}
+
+/* ============================================================
+   FLOW RESPONSIVE
+============================================================ */
+
+.irrigation-flow {
+  overflow-x: auto;
+}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+@media (
+  max-width: 900px
+) {
+  .decision-engine-meta {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(
+          0,
+          1fr
+        )
+      );
+  }
+}
+
+@media (
+  max-width: 560px
+) {
+  .irrigation-decision-reason-header {
+    flex-direction: column;
+  }
+
+  .decision-engine-meta {
+    grid-template-columns:
+      1fr;
+  }
+}
