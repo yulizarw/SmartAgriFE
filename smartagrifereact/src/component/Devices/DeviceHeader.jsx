@@ -7,6 +7,7 @@ const DeviceHeader = ({
   onlineDevices,
   offlineDevices,
   onAdd,
+  listAllSensors
 }) => {
   return (
     <>
@@ -65,7 +66,7 @@ const DeviceHeader = ({
           <div>
             <span>IOT SENSOR</span>
 
-            <strong>—</strong>
+            <strong>{listAllSensors?.length}</strong>
           </div>
         </div>
       </div>

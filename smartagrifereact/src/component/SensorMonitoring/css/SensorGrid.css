@@ -44,3 +44,43 @@
     grid-template-columns: 1fr;
   }
 }
+.sensor-grid-container {
+  width: 100%;
+}
+
+.sensor-grid-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.sensor-grid-pagination button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #dfe7e3;
+  background: #ffffff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s ease;
+}
+
+.sensor-grid-pagination button:hover:not(:disabled) {
+  background: #f1f8f4;
+  border-color: #1fa463;
+}
+
+.sensor-grid-pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.sensor-grid-pagination span {
+  font-size: 13px;
+  color: #66756d;
+}

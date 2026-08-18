@@ -2,7 +2,7 @@ import React from "react";
 
 import "./css/DeviceForm.css";
 
-const DeviceForm = ({ form, setForm, farms, saving, onSubmit, onClose }) => {
+const DeviceForm = ({ form, setForm, farmList, saving, onSubmit, onClose }) => {
   const updateField = (field, value) => {
     setForm((prev) => ({
       ...prev,
@@ -110,7 +110,7 @@ const DeviceForm = ({ form, setForm, farms, saving, onSubmit, onClose }) => {
             >
               <option value="">Select Farm</option>
 
-              {farms.map((farm) => (
+              {farmList.map((farm) => (
                 <option key={farm.id} value={farm.id}>
                   {farm.name}
                 </option>

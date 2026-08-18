@@ -13,6 +13,7 @@ const DeviceCard = ({ device, selected, onClick }) => {
       type="button"
       className={selected ? "device-card selected" : "device-card"}
       onClick={onClick}
+      disabled={!isOnline}
     >
       <div className="device-card-icon">📡</div>
 

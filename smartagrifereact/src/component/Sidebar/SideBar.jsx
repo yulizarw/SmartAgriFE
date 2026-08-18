@@ -124,20 +124,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, logOutFunction }) => {
             active={isActive("/crop")}
             onClick={() => handleNavigation("/crop")}
           />
-
-          
+          <SidebarItem
+            icon="⚡"
+            label="Devices / IoT"
+            active={isActive("/devices")}
+            onClick={() => handleNavigation("/devices")}
+          />
         </SidebarSection>
 
         {/* MONITORING */}
-
         <SidebarSection title="MONITORING">
-          <SidebarItem
-            icon="🌿"
-            label="Crop Health"
-            active={isActive("/crop-health")}
-            onClick={() => handleNavigation("/crop-health")}
-          />
-
           <SidebarItem
             icon="📡"
             label="Sensor Monitoring"
@@ -151,6 +147,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, logOutFunction }) => {
             label="Climate & Soil"
             active={isActive("/climate")}
             onClick={() => handleNavigation("/climate")}
+          />
+          <SidebarItem
+            icon="🌿"
+            label="Crop Health"
+            active={isActive("/crop-health")}
+            onClick={() => handleNavigation("/crop-health")}
           />
         </SidebarSection>
 
@@ -170,13 +172,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, logOutFunction }) => {
             label="Irrigation"
             active={isActive("/irrigation")}
             onClick={() => handleNavigation("/irrigation")}
-          />
-
-          <SidebarItem
-            icon="⚡"
-            label="Devices / IoT"
-            active={isActive("/devices")}
-            onClick={() => handleNavigation("/devices")}
           />
         </SidebarSection>
 

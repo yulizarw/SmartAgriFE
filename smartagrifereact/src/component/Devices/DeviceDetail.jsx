@@ -5,7 +5,7 @@ import "./css/DeviceDetail.css";
 import SensorList from "./SensorList";
 import SensorForm from "./SensorForm";
 
-const DeviceDetail = ({ device, farms = [], getSensors, onAddSensor, onClose }) => {
+const DeviceDetail = ({ device, farmList, getSensors, onAddSensor, onClose, dispatch }) => {
   const [sensors, setSensors] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -16,7 +16,7 @@ const DeviceDetail = ({ device, farms = [], getSensors, onAddSensor, onClose }) 
 
   const [error, setError] = useState("");
 
-  const farm = farms.find((item) => Number(item.id) === Number(device.farmId));
+  const farm = farmList.find((item) => Number(item.id) === Number(device.farmId));
 
   /*
   |--------------------------------------------------------------------------
@@ -33,11 +33,9 @@ const DeviceDetail = ({ device, farms = [], getSensors, onAddSensor, onClose }) 
 
         return;
       }
-
-      const result = await getSensors(device.id);
-
+      console.log(device.id)
+      const result = await dispatch(getSensors(device.id));
       const data = result?.data || result?.sensors || result || [];
-
       setSensors(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error(err);

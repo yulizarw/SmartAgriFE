@@ -30,6 +30,8 @@ import LoginProtectedRoute from "./helper/LoginProtectedRoute";
 import { Provider, useSelector } from "react-redux";
 import store from "./store/index";
 
+import { createDevice, createSensor,listAllSensor,listDevice, getAllReading } from "../src/store/action/deviceAction";
+
 function App() {
   // const [authLogin, setAuthLogin] = useState(false);
   const [authLogin, setAuthLogin] = useState(
@@ -85,7 +87,7 @@ function App() {
             path="/sensors"
             element={
               <ProtectedRoute authLogin={authLogin}>
-                <SensorMonitoring logOutFunction={logOutFunction} />
+                <SensorMonitoring logOutFunction={logOutFunction} listDevice={listDevice} getAllReading={getAllReading} />
               </ProtectedRoute>
             }
           />
@@ -118,7 +120,7 @@ function App() {
             path="/devices"
             element={
               <ProtectedRoute authLogin={authLogin}>
-                <Devices logOutFunction={logOutFunction} />
+                <Devices logOutFunction={logOutFunction} createDevice={createDevice} createSensor={createSensor} listAllSensor={listAllSensor} />
               </ProtectedRoute>
             }
           />

@@ -2,9 +2,9 @@ import React from "react";
 
 import "./css/DeviceList.css";
 
-const DeviceList = ({ devices, farms, loading, onView, onAdd }) => {
+const DeviceList = ({ devices, farms, loading, onView, onAdd, listDevices, farmList }) => {
   const getFarmName = (farmId) => {
-    const farm = farms.find((item) => Number(item.id) === Number(farmId));
+    const farm = farmList.find((item) => Number(item.id) === Number(farmId));
 
     return farm?.name || "No Farm";
   };
@@ -26,10 +26,10 @@ const DeviceList = ({ devices, farms, loading, onView, onAdd }) => {
           <h2>IoT Devices</h2>
         </div>
 
-        <span className="device-count">{devices.length} devices</span>
+        <span className="device-count">{listDevices.length} devices</span>
       </div>
 
-      {devices.length === 0 ? (
+      {listDevices.length === 0 ? (
         <div className="device-empty">
           <div className="device-empty-icon">📡</div>
 
@@ -61,7 +61,7 @@ const DeviceList = ({ devices, farms, loading, onView, onAdd }) => {
             </thead>
 
             <tbody>
-              {devices.map((device) => {
+              {listDevices.map((device) => {
                 const online =
                   device.status === true ||
                   device.status === "ONLINE" ||

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./css/Devices.css";
+import Loading from "../component/Loading/Loading";
 
 import Sidebar from "../component/Sidebar/SideBar";
 
@@ -8,6 +10,9 @@ import DeviceHeader from "../component/Devices/DeviceHeader";
 import DeviceList from "../component/Devices/DeviceList";
 import DeviceForm from "../component/Devices/DeviceForm";
 import DeviceDetail from "../component/Devices/DeviceDetail";
+
+// redux
+import { listDevice, searchSensorDevice} from "../store/action/deviceAction";
 
 const emptyDevice = {
   deviceCode: "",
@@ -27,13 +32,15 @@ export const Devices = ({
   createSensor,
   getSensors,
   getFarms,
+  listAllSensor,
   logOutFunction,
 }) => {
+  const dispatch = useDispatch();
   const [devices, setDevices] = useState([]);
 
   const [farms, setFarms] = useState([]);
 
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
   const [saving, setSaving] = useState(false);
 
@@ -47,36 +54,47 @@ export const Devices = ({
 
   const [deviceForm, setDeviceForm] = useState(emptyDevice);
 
+  const userLogin = useSelector((state) => state.userReducers.userLogin);
+  const listDevices = useSelector((state) => state.deviceReducers.listDevices);
+  const farmList = useSelector((state)=>state.farmReducers.farms)
+  const sensorDevices = useSelector((state)=>state.deviceReducers.sensorDevices)
+  const listAllSensors = useSelector((state)=> state.deviceReducers.listAllSensors)
   /*
   |--------------------------------------------------------------------------
   | LOAD DEVICES
   |--------------------------------------------------------------------------
   */
-
-  const loadDevices = async () => {
-    try {
-      setLoading(true);
-
-      setError("");
-
-      if (!getDevices) {
-        setDevices([]);
-        return;
-      }
-
-      const result = await getDevices();
-
-      const data = result?.data || result?.devices || result || [];
-
-      setDevices(Array.isArray(data) ? data : []);
-    } catch (err) {
-      console.error(err);
-
-      setError(err?.message || "Gagal mengambil data device.");
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    if (userLogin?.access_token) {
+      dispatch(listDevice(userLogin.access_token));
+      dispatch(listAllSensor())
     }
-  };
+  }, [userLogin]);
+
+  // const loadDevices = async () => {
+  //   try {
+  //     setLoading(true);
+
+  //     setError("");
+
+  //     if (!getDevices) {
+  //       setDevices([]);
+  //       return;
+  //     }
+
+  //     const result = await getDevices();
+
+  //     const data = result?.data || result?.devices || result || [];
+
+  //     setDevices(Array.isArray(data) ? data : []);
+  //   } catch (err) {
+  //     console.error(err);
+
+  //     setError(err?.message || "Gagal mengambil data device.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   /*
   |--------------------------------------------------------------------------
@@ -84,26 +102,26 @@ export const Devices = ({
   |--------------------------------------------------------------------------
   */
 
-  const loadFarms = async () => {
-    try {
-      if (!getFarms) {
-        return;
-      }
+  // const loadFarms = async () => {
+  //   try {
+  //     if (!getFarms) {
+  //       return;
+  //     }
 
-      const result = await getFarms();
+  //     const result = await getFarms();
 
-      const data = result?.data || result?.farms || result || [];
+  //     const data = result?.data || result?.farms || result || [];
 
-      setFarms(Array.isArray(data) ? data : []);
-    } catch (err) {
-      console.error("Load farms error:", err);
-    }
-  };
+  //     setFarms(Array.isArray(data) ? data : []);
+  //   } catch (err) {
+  //     console.error("Load farms error:", err);
+  //   }
+  // };
 
-  useEffect(() => {
-    loadDevices();
-    loadFarms();
-  }, []);
+  // useEffect(() => {
+  //   loadDevices();
+  //   loadFarms();
+  // }, []);
 
   /*
   |--------------------------------------------------------------------------
@@ -175,9 +193,10 @@ export const Devices = ({
         lastSeen: deviceForm.lastSeen || null,
       };
 
-      await createDevice(payload);
+      await dispatch(createDevice(userLogin.access_token,payload));
 
-      await loadDevices();
+      await dispatch(listDevice(userLogin.access_token))
+      // await loadDevices();
 
       handleCloseDeviceForm();
     } catch (err) {
@@ -220,11 +239,11 @@ export const Devices = ({
       throw new Error("createSensor belum dihubungkan.");
     }
 
-    await createSensor({
+    await dispatch(createSensor({
       ...payload,
-
       deviceId: selectedDevice.id,
-    });
+      access_token:userLogin.access_token
+    }));
   };
 
   /*
@@ -232,10 +251,10 @@ export const Devices = ({
   | STATISTICS
   |--------------------------------------------------------------------------
   */
+  console.log(listAllSensors.length)
+  const totalDevices = listDevices.length;
 
-  const totalDevices = devices.length;
-
-  const onlineDevices = devices.filter(
+  const onlineDevices = listDevices.filter(
     (device) =>
       device.status === true ||
       device.status === "ONLINE" ||
@@ -246,6 +265,7 @@ export const Devices = ({
 
   return (
     <>
+      <Loading />
       <Sidebar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
@@ -258,6 +278,8 @@ export const Devices = ({
           onlineDevices={onlineDevices}
           offlineDevices={offlineDevices}
           onAdd={handleAddDevice}
+          listAllSensors={listAllSensors}
+      
         />
 
         {error && (
@@ -278,8 +300,10 @@ export const Devices = ({
 
         <DeviceList
           devices={devices}
+          listDevices={listDevices}
+          farmList = {farmList}
           farms={farms}
-          loading={loading}
+          // loading={loading}
           onView={handleViewDevice}
           onAdd={handleAddDevice}
         />
@@ -290,7 +314,7 @@ export const Devices = ({
               <DeviceForm
                 form={deviceForm}
                 setForm={setDeviceForm}
-                farms={farms}
+                farmList={farmList}
                 saving={saving}
                 onSubmit={handleSubmitDevice}
                 onClose={handleCloseDeviceForm}
@@ -304,8 +328,9 @@ export const Devices = ({
             <div className="device-detail-modal">
               <DeviceDetail
                 device={selectedDevice}
-                farms={farms}
-                getSensors={getSensors}
+                farmList={farmList}
+                dispatch={dispatch}
+                getSensors={searchSensorDevice}
                 onAddSensor={handleAddSensor}
                 onClose={handleCloseDetail}
               />
@@ -316,4 +341,3 @@ export const Devices = ({
     </>
   );
 };
-
